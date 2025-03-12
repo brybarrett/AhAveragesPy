@@ -92,3 +92,4 @@ def get_prices():
 
 if __name__ == "__main__":
     main()
+    print("Done!")
