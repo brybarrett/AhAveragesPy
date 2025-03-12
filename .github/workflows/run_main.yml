@@ -1,38 +1,38 @@
-name: Run Main Script
+# name: Run Main Script
 
-on:
-  schedule:
-    - cron: "*/1 * * * *"
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: "*/1 * * * *"
+#   workflow_dispatch:
 
-jobs:
-  run-main:
-    runs-on: ubuntu-latest
+# jobs:
+#   run-main:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+#     - name: Set up Python
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests nbtlib nbt
+#     - name: Install dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install requests nbtlib nbt
 
-    - name: Run main script
-      run: |
-        python __main__.py
+#     - name: Run main script
+#       run: |
+#         python __main__.py
 
-    - name: Commit and push changes
-      env:
-        PAT: ${{ secrets.PAT }}
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add database.db
-        git commit -m 'Update database.db with new auctions'
-        git push https://PAT:${{ secrets.PAT }}@github.com/UltimateBoi/AhAveragesPy.git HEAD:main
+#     - name: Commit and push changes
+#       env:
+#         PAT: ${{ secrets.PAT }}
+#       run: |
+#         git config --global user.name 'github-actions[bot]'
+#         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+#         git add database.db
+#         git commit -m 'Update database.db with new auctions'
+#         git push https://PAT:${{ secrets.PAT }}@github.com/UltimateBoi/AhAveragesPy.git HEAD:main
