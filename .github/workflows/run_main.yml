@@ -35,4 +35,4 @@ jobs:
         git commit -m 'Update database.db with new auctions'
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
