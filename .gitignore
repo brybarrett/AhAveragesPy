@@ -1,3 +1,7 @@
 combinedAuctions.jsoncombinedAuctions.json
 combinedAuctions.json
 combinedAuctions.json
+# Large data files
+*.json
+!options.json
+database.db
