@@ -1,0 +1,1 @@
+Bad implemtation / conversion of my 2020 auction averages (which was made into a sniper). Averaging system is extremely (4 years) outdated so dont trust. Purely for example / testing currently as of 03/25
