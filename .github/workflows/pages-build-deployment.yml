@@ -4,11 +4,16 @@ on:
   push:
     branches:
       - main
-  dispatch:
-      inputs:
-        event_type: deploy
-        description: Deploy to GitHub Pages
-        client_payload: '{"source_branch": "main"}'
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'Trigger type'
+        required: false
+        default: 'deploy'
+      source_branch:
+        description: 'Source branch'
+        required: false
+        default: 'main'
 
 jobs:
   build:
@@ -30,7 +35,7 @@ jobs:
       - name: Build project
         run: |
           # If you have a build script, run it here
-          # For now, we'll just copy the index.html to the output folder
+        uses: "peaceiris/actions-gh-pages@v3"
           mkdir -p public
           cp index.html public/
 
