@@ -16,10 +16,12 @@ def decode_item_bytes(b):
             return {i.name: unpack_nbt(i) for i in tag.tags}
         else:
             return tag.value
-    # write to file for testing
-    #with open('nbt.json', 'w') as f:
-        #json.dump(unpack_nbt(nbt_file), f, indent=4)
-    return unpack_nbt(nbt_file)
+    unpacked_nbt = unpack_nbt(nbt_file)
+    # Convert bytearray to string
+    for key, value in unpacked_nbt.items():
+        if isinstance(value, bytearray):
+            unpacked_nbt[key] = value.decode('utf-8')
+    return unpacked_nbt
 
 def fetch(url):
     response = requests.get(url)
