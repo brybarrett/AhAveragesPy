@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Database Viewer</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 10px;
+            }
+            th, td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            #controls {
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Database Viewer</h1>
+        <div id="controls">
+            <label for="tableSelect">Select Table:</label>
+            <select id="tableSelect">
+                <option disabled selected>Loading tables...</option>
+            </select>
+            <!-- Search input -->
+            <label for="searchInput" style="margin-left: 20px;">Search:</label>
+            <input type="text" id="searchInput" placeholder="Type to search..." />
+        </div>
+        <div id="tableContainer"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+        <script>
+            (async function() {
+                // Configure sql.js to get the WASM file from the CDN.
+                const config = {
+                    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`
+                };
+
+                // Initialize SQL.js.
+                const SQL = await initSqlJs(config);
+
+                // Fetch the database file as an ArrayBuffer.
+                let response = await fetch('database.db');
+                if (!response.ok) {
+                    document.body.innerHTML = '<h2>Error loading database.db</h2>';
+                    return;
+                }
+                let buffer = await response.arrayBuffer();
+                let db = new SQL.Database(new Uint8Array(buffer));
+
+                // Get the table names from the database.
+                let res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+                let tableNames = (res[0] && res[0].values.map(row => row[0])) || [];
+                const tableSelect = document.getElementById('tableSelect');
+                tableSelect.innerHTML = "";
+                if (tableNames.length === 0) {
+                    tableSelect.innerHTML = '<option disabled>No tables found</option>';
+                    return;
+                }
+                tableNames.forEach(name => {
+                    let option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    tableSelect.appendChild(option);
+                });
+
+                let currentTableName = tableNames[0];
+
+                // Function to display table contents with optional search filtering.
+                function displayTable(tableName, searchQuery = "") {
+                    let result = db.exec(`SELECT * FROM "${tableName}";`);
+                    let container = document.getElementById('tableContainer');
+                    container.innerHTML = "";
+                    if (!result[0]) {
+                        container.innerHTML = `<p>No data available in table "${tableName}"</p>`;
+                        return;
+                    }
+                    let { columns, values } = result[0];
+                    let filteredRows = values;
+                    if (searchQuery.trim() !== "") {
+                        const lowerQuery = searchQuery.toLowerCase();
+                        filteredRows = values.filter(row => 
+                            row.some(cell => cell && cell.toString().toLowerCase().includes(lowerQuery))
+                        );
+                    }
+
+                    if(filteredRows.length === 0) {
+                        container.innerHTML = `<p>No matching records found in table "${tableName}"</p>`;
+                        return;
+                    }
+
+                    let table = document.createElement('table');
+                    let thead = document.createElement('thead');
+                    let headerRow = document.createElement('tr');
+                    columns.forEach(col => {
+                        let th = document.createElement('th');
+                        th.textContent = col;
+                        headerRow.appendChild(th);
+                    });
+                    thead.appendChild(headerRow);
+                    table.appendChild(thead);
+
+                    let tbody = document.createElement('tbody');
+                    filteredRows.forEach(row => {
+                        let tr = document.createElement('tr');
+                        row.forEach(cell => {
+                            let td = document.createElement('td');
+                            td.textContent = cell;
+                            tr.appendChild(td);
+                        });
+                        tbody.appendChild(tr);
+                    });
+                    table.appendChild(tbody);
+                    container.appendChild(table);
+                }
+
+                // Display the first table by default.
+                displayTable(currentTableName);
+
+                // When table is changed, clear search and display new table.
+                tableSelect.addEventListener('change', function() {
+                    currentTableName = this.value;
+                    document.getElementById('searchInput').value = "";
+                    displayTable(currentTableName);
+                });
+
+                // Live search as the user types.
+                const searchInput = document.getElementById('searchInput');
+                searchInput.addEventListener('input', function() {
+                    displayTable(currentTableName, this.value);
+                });
+            })();
+        </script>
+    </body>
+</html>
