@@ -6,6 +6,8 @@ import json
 import sqlite3
 import time
 from nbt.nbt import TAG_List, TAG_Compound
+import aiohttp
+import asyncio
 
 def decode_item_bytes(b):
     nbt_file = nbt.nbt.NBTFile(fileobj=io.BytesIO(base64.b64decode(b)))
@@ -23,18 +25,31 @@ def decode_item_bytes(b):
 
 def fetch(url):
     response = requests.get(url)
-    return response.json()
+    try:
+        return response.json()
+    except requests.exceptions.JSONDecodeError:
+        print("Error: Received invalid JSON from", url)
+        return {}
 
 def main():
     print("Starting...")
     with open('options.json') as f:
         options = json.load(f)
     print("Getting auctions...")
-    data0 = fetch("https://api.hypixel.net/skyblock/auctions_ended")
+    async def fetch_auctions():
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://api.hypixel.net/skyblock/auctions_ended") as response:
+                try:
+                    return await response.json()
+                except Exception as e:
+                    print("Error: Received invalid JSON", e)
+                    return {}
+
+    data0 = asyncio.run(fetch_auctions())
     print("Got auctions!")
     # testing raw data written to a file
-    #with open('raw_auctions.json', 'w') as f:
-        #json.dump(data0, f, indent=4)
+    with open('raw_auctions.json', 'w') as f:
+        json.dump(data0, f, indent=4)
     auctions = data0['auctions']
     auctions = [x for x in auctions if x['bin'] and x['buyer']]
 
