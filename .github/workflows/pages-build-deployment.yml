@@ -4,16 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      event_type:
-        description: 'Trigger type'
-        required: false
-        default: 'deploy'
-      source_branch:
-        description: 'Source branch'
-        required: false
-        default: 'main'
 
 jobs:
   build:
@@ -35,6 +25,7 @@ jobs:
       - name: Build project
         run: |
           # If you have a build script, run it here
+          # For now, we'll just copy the index.html to the output folder
           mkdir -p public
           cp index.html public/
 
