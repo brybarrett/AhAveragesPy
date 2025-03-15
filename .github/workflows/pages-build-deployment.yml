@@ -35,7 +35,6 @@ jobs:
       - name: Build project
         run: |
           # If you have a build script, run it here
-        uses: "peaceiris/actions-gh-pages@v3"
           mkdir -p public
           cp index.html public/
 
