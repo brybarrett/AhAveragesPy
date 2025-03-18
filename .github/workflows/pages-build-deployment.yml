@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  dispatch:
-      inputs:
-        event_type: deploy
-        description: Deploy to GitHub Pages
-        client_payload: '{"source_branch": "main"}'
 
 jobs:
   build:
