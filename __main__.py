@@ -48,8 +48,11 @@ def main():
     auctions = [x for x in auctions if x['bin'] and x['buyer']]
 
     auctions = [{**x, 'detail': decode_item_bytes(x['item_bytes'])} for x in auctions]
-    with open('auctions.json', 'w') as f:
-        json.dump(auctions, f, indent=4)
+    try:
+        with open('auctions.json', 'w') as f:
+            json.dump(auctions, f, indent=4)
+    except Exception as e:
+        print("Error: Failed to write auctions.json", e)
 
     auctions = [{**x, 'detail': x['detail']['i'][0]} for x in auctions]
 
@@ -74,8 +77,11 @@ def main():
     } for x in auctions]
 
     # print(auctions)
-    with open('auctions2.json', 'w') as f:
-        json.dump(auctions, f, indent=4)
+    try:
+        with open('auctions2.json', 'w') as f:
+            json.dump(auctions, f, indent=4)
+    except Exception as e:
+        print("Error: Failed to write auctions2.json", e)
 
     auctions3 = [{k: x[k] for k in 'timestamp,key,unitprice'.split(',')} for x in auctions]
     with open('auctions3.json', 'w') as f:
