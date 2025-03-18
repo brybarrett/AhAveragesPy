@@ -1,682 +1,302 @@
 [
     {
-        "timestamp": 1741873990314,
+        "timestamp": 1742288830267,
+        "key": "GIANTS_SWORD.ultimate_soul_eater=5+MYTHIC+Giant+rarity_upgrade",
+        "unitprice": 168000000.0
+    },
+    {
+        "timestamp": 1742288830943,
         "key": "ATTRIBUTE_SHARD.+COMMON+",
-        "unitprice": 1390000.0
+        "unitprice": 5200000.0
     },
     {
-        "timestamp": 1741873990376,
-        "key": "NUTCRACKER_BOOTS.+LEGENDARY+",
-        "unitprice": 1750000.0
+        "timestamp": 1742288831151,
+        "key": "ADAPTIVE_BELT.+EPIC+",
+        "unitprice": 750000.0
     },
     {
-        "timestamp": 1741873990694,
-        "key": "LIVID_DAGGER.ultimate_one_for_all=1+LEGENDARY+Fabled",
-        "unitprice": 9000000.0
-    },
-    {
-        "timestamp": 1741873991429,
-        "key": "FERVOR_BOOTS.+LEGENDARY+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1741873991810,
-        "key": "SCYTHE_BLADE.+LEGENDARY+",
-        "unitprice": 9200000.0
-    },
-    {
-        "timestamp": 1741873992153,
-        "key": "BONZO_MASK.+RARE+",
-        "unitprice": 1050000.0
-    },
-    {
-        "timestamp": 1741873992221,
-        "key": "SPIDER_TALISMAN.+COMMON,UNCOMMON+",
-        "unitprice": 55000.0
-    },
-    {
-        "timestamp": 1741873993363,
-        "key": "MOLTEN_BELT.+EPIC+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741873993934,
-        "key": "GLACITE_LEGGINGS.+EPIC+",
-        "unitprice": 10000.0
-    },
-    {
-        "timestamp": 1741873994519,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 999000.0
-    },
-    {
-        "timestamp": 1741873995306,
-        "key": "FINAL_DESTINATION_LEGGINGS.+LEGENDARY+",
-        "unitprice": 800000.0
-    },
-    {
-        "timestamp": 1741873995613,
-        "key": "CONJURING_SWORD.+RARE+Epic",
-        "unitprice": 44000.0
-    },
-    {
-        "timestamp": 1741873995731,
-        "key": "SILVER_FANG.+COMMON,UNCOMMON+",
-        "unitprice": 20000.0
-    },
-    {
-        "timestamp": 1741873995954,
-        "key": "MAGMA_NECKLACE.+RARE+",
-        "unitprice": 89000.0
-    },
-    {
-        "timestamp": 1741873996608,
-        "key": "PERSONAL_COMPACTOR_5000.+RARE+",
-        "unitprice": 1100000.0
-    },
-    {
-        "timestamp": 1741873997456,
-        "key": "FERVOR_BOOTS.+LEGENDARY+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1741873997511,
-        "key": "RICH_CHOCOLATE_CHUNK.+RARE+",
-        "unitprice": 500000.0
-    },
-    {
-        "timestamp": 1741873997678,
-        "key": "DAY_CRYSTAL.+RARE+",
-        "unitprice": 598000.0
-    },
-    {
-        "timestamp": 1741873997785,
-        "key": "TERMINATOR.+MYTHIC+Precise+rarity_upgrade",
-        "unitprice": 1010000000.0
-    },
-    {
-        "timestamp": 1741873999419,
-        "key": "STARRED_SHADOW_ASSASSIN_LEGGINGS.ultimate_last_stand=3+LEGENDARY+Fierce",
-        "unitprice": 6399999.0
-    },
-    {
-        "timestamp": 1741873999660,
-        "key": "AURORA_HELMET.+LEGENDARY+",
-        "unitprice": 2590000.0
-    },
-    {
-        "timestamp": 1741873999679,
-        "key": "LOTUS_BRACELET.+RARE+",
-        "unitprice": 325000.0
-    },
-    {
-        "timestamp": 1741874000220,
-        "key": "WINTER_ROD.+RARE+",
-        "unitprice": 130000.0
-    },
-    {
-        "timestamp": 1741874000331,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874000657,
-        "key": "SKELETOR_HELMET.+EPIC+",
-        "unitprice": 40000.0
-    },
-    {
-        "timestamp": 1741874000857,
-        "key": "KAT_BOUQUET.+SPECIAL+",
-        "unitprice": 3300000.0
-    },
-    {
-        "timestamp": 1741874000874,
-        "key": "GIANTS_SWORD.+LEGENDARY+Giant",
-        "unitprice": 112000000.0
-    },
-    {
-        "timestamp": 1741874001367,
-        "key": "POWER_WITHER_LEGGINGS.ultimate_legion=3+MYTHIC++rarity_upgrade",
-        "unitprice": 53900000.0
-    },
-    {
-        "timestamp": 1741874001691,
-        "key": "SHAMAN_SWORD.+EPIC+",
-        "unitprice": 400000.0
-    },
-    {
-        "timestamp": 1741874002191,
-        "key": "BUILDERS_WAND.+LEGENDARY+",
-        "unitprice": 14000000.0
-    },
-    {
-        "timestamp": 1741874002384,
-        "key": "FINAL_DESTINATION_BOOTS.+LEGENDARY+",
-        "unitprice": 800000.0
-    },
-    {
-        "timestamp": 1741874003354,
-        "key": "ARACHNE_CRYSTAL.+RARE+",
-        "unitprice": 148437.5
-    },
-    {
-        "timestamp": 1741874003357,
-        "key": "GLACITE_HELMET.+EPIC+",
-        "unitprice": 10000.0
-    },
-    {
-        "timestamp": 1741874003472,
-        "key": "SCARF_THESIS.+EPIC+",
-        "unitprice": 6480000.0
-    },
-    {
-        "timestamp": 1741874003524,
-        "key": "NUTCRACKER_HELMET.+LEGENDARY+",
-        "unitprice": 2300000.0
-    },
-    {
-        "timestamp": 1741874003926,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874004173,
-        "key": "PET.+LEGENDARY+",
-        "unitprice": 3670000.0
-    },
-    {
-        "timestamp": 1741874004390,
-        "key": "ATMOSPHERIC_FILTER.+RARE+",
-        "unitprice": 999998.0
-    },
-    {
-        "timestamp": 1741874004543,
-        "key": "PERSONAL_COMPACTOR_4000.+COMMON,UNCOMMON+",
-        "unitprice": 640000.0
-    },
-    {
-        "timestamp": 1741874005243,
-        "key": "EXPERIENCE_ARTIFACT.+EPIC+",
-        "unitprice": 850000.0
-    },
-    {
-        "timestamp": 1741874005781,
-        "key": "BLOOD_GOD_CREST.+COMMON+",
-        "unitprice": 3000000.0
-    },
-    {
-        "timestamp": 1741874006312,
-        "key": "TERROR_BOOTS.+LEGENDARY+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1741874006695,
-        "key": "STRONG_DRAGON_LEGGINGS.+LEGENDARY+Strong",
-        "unitprice": 2000000.0
-    },
-    {
-        "timestamp": 1741874006823,
-        "key": "BUILDERS_WAND.+LEGENDARY+",
-        "unitprice": 19488999.0
-    },
-    {
-        "timestamp": 1741874006831,
-        "key": "AMBER_POLISHED_DRILL_ENGINE.+RARE+",
-        "unitprice": 249000000.0
-    },
-    {
-        "timestamp": 1741874006922,
-        "key": "SKELETOR_CHESTPLATE.+EPIC+",
-        "unitprice": 37000.0
-    },
-    {
-        "timestamp": 1741874007217,
-        "key": "DIVAN_BOOTS.+MYTHIC++rarity_upgrade",
-        "unitprice": 95000000.0
-    },
-    {
-        "timestamp": 1741874007301,
-        "key": "ARCHFIEND_DICE.+EPIC+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1741874007638,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874008097,
-        "key": "SOULFLOW_BATTERY.+RARE+",
-        "unitprice": 1800000.0
-    },
-    {
-        "timestamp": 1741874008194,
-        "key": "POTATO_TALISMAN.+COMMON+",
-        "unitprice": 50000000.0
-    },
-    {
-        "timestamp": 1741874008645,
-        "key": "RABBIT_HAT.+COMMON,UNCOMMON+",
-        "unitprice": 49000.0
-    },
-    {
-        "timestamp": 1741874008852,
-        "key": "REAPER_MASK.+LEGENDARY+",
-        "unitprice": 15000000.0
-    },
-    {
-        "timestamp": 1741874009363,
-        "key": "JERRY_STAFF.+EPIC+",
-        "unitprice": 600000.0
-    },
-    {
-        "timestamp": 1741874009548,
-        "key": "KAT_BOUQUET.+SPECIAL+",
-        "unitprice": 3400000.0
-    },
-    {
-        "timestamp": 1741874009623,
-        "key": "TACTICIAN_SWORD.+RARE+",
-        "unitprice": 90000.0
-    },
-    {
-        "timestamp": 1741874009752,
-        "key": "JUJU_SHORTBOW.ultimate_soul_eater=5+LEGENDARY+Spiritual+rarity_upgrade",
-        "unitprice": 20000000.0
-    },
-    {
-        "timestamp": 1741874010675,
-        "key": "CRIMSON_BOOTS.+LEGENDARY+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1741874011008,
-        "key": "GLACITE_BOOTS.+EPIC+",
-        "unitprice": 20000.0
-    },
-    {
-        "timestamp": 1741874011163,
-        "key": "RUNE.+EPIC+",
-        "unitprice": 4070000.0
-    },
-    {
-        "timestamp": 1741874011618,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874011809,
-        "key": "SKELETOR_LEGGINGS.+EPIC+",
-        "unitprice": 45000.0
-    },
-    {
-        "timestamp": 1741874012155,
-        "key": "MOLTEN_BELT.+EPIC+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874012221,
-        "key": "YOUNG_DRAGON_CHESTPLATE.+LEGENDARY+",
-        "unitprice": 850000.0
-    },
-    {
-        "timestamp": 1741874013188,
-        "key": "PULSE_RING.+COMMON,UNCOMMON+",
-        "unitprice": 3748000.0
-    },
-    {
-        "timestamp": 1741874013974,
-        "key": "CHIRPING_STEREO.+LEGENDARY+",
-        "unitprice": 120000.0
-    },
-    {
-        "timestamp": 1741874014324,
-        "key": "END_STONE_BOW.+EPIC+",
-        "unitprice": 195000.0
-    },
-    {
-        "timestamp": 1741874016012,
-        "key": "CANDY_ARTIFACT.+EPIC+",
-        "unitprice": 1600000.0
-    },
-    {
-        "timestamp": 1741874016387,
-        "key": "ADVANCED_GARDENING_AXE.+RARE+",
-        "unitprice": 200000.0
-    },
-    {
-        "timestamp": 1741874016469,
-        "key": "SEA_LANTERN_HAT.+COMMON,UNCOMMON+",
-        "unitprice": 45000.0
-    },
-    {
-        "timestamp": 1741874017245,
-        "key": "GLACITE_BOOTS.+EPIC+",
-        "unitprice": 30000.0
-    },
-    {
-        "timestamp": 1741874017472,
-        "key": "SKELETOR_BOOTS.+EPIC+Wise",
-        "unitprice": 90000.0
-    },
-    {
-        "timestamp": 1741874019148,
-        "key": "POWER_WITHER_BOOTS.+LEGENDARY+",
-        "unitprice": 12000000.0
-    },
-    {
-        "timestamp": 1741874019192,
-        "key": "ATTRIBUTE_SHARD.+COMMON+",
-        "unitprice": 1333333.0
-    },
-    {
-        "timestamp": 1741874019533,
-        "key": "SQUID_BOOTS.+COMMON,UNCOMMON+",
-        "unitprice": 13000.0
-    },
-    {
-        "timestamp": 1741874019758,
-        "key": "WHEEL_OF_FATE.+RARE+",
-        "unitprice": 17000000.0
-    },
-    {
-        "timestamp": 1741874021498,
-        "key": "MOLTEN_NECKLACE.+EPIC+",
-        "unitprice": 1300000.0
-    },
-    {
-        "timestamp": 1741874021524,
-        "key": "JUNGLE_AXE.+COMMON,UNCOMMON+",
-        "unitprice": 38000.0
-    },
-    {
-        "timestamp": 1741874022921,
-        "key": "FLAMING_CHESTPLATE.+RARE+",
-        "unitprice": 1440000.0
-    },
-    {
-        "timestamp": 1741874023185,
-        "key": "WISE_WITHER_BOOTS.+LEGENDARY+Necrotic",
-        "unitprice": 7300000.0
-    },
-    {
-        "timestamp": 1741874024313,
-        "key": "ARACK.+EPIC+",
-        "unitprice": 99999.0
-    },
-    {
-        "timestamp": 1741874024367,
-        "key": "LOTUS_NECKLACE.+RARE+",
-        "unitprice": 1599999.0
-    },
-    {
-        "timestamp": 1741874025355,
-        "key": "HEARTMAW_DAGGER.+LEGENDARY+",
-        "unitprice": 98000000.0
-    },
-    {
-        "timestamp": 1741874025452,
-        "key": "AURORA_BOOTS.+LEGENDARY+",
-        "unitprice": 900000.0
-    },
-    {
-        "timestamp": 1741874025459,
-        "key": "CRIMSON_LEGGINGS.+LEGENDARY+",
-        "unitprice": 10000000.0
-    },
-    {
-        "timestamp": 1741874025615,
-        "key": "ASPECT_OF_THE_END.+RARE+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1741874025942,
-        "key": "PUMPKIN_DICER.+EPIC+",
-        "unitprice": 2277998.0
-    },
-    {
-        "timestamp": 1741874026554,
-        "key": "SNOWMAN_MASK.+RARE+",
-        "unitprice": 1400000.0
-    },
-    {
-        "timestamp": 1741874026888,
-        "key": "MOLTEN_BRACELET.+EPIC+",
-        "unitprice": 1690000.0
-    },
-    {
-        "timestamp": 1741874027946,
-        "key": "ZOMBIE_COMMANDER_CHESTPLATE.+EPIC+",
-        "unitprice": 139999.0
-    },
-    {
-        "timestamp": 1741874028224,
-        "key": "REFORGE_ANVIL.+EPIC+",
-        "unitprice": 1150000.0
-    },
-    {
-        "timestamp": 1741874028765,
-        "key": "FLAMING_SWORD.+COMMON,UNCOMMON+",
-        "unitprice": 249000.0
-    },
-    {
-        "timestamp": 1741874029244,
-        "key": "STAFF_OF_THE_VOLCANO.+RARE+",
+        "timestamp": 1742288833131,
+        "key": "WOOD_TALISMAN.+COMMON,UNCOMMON+",
         "unitprice": 70000.0
     },
     {
-        "timestamp": 1741874030884,
-        "key": "FERMENTO_BOOTS.+LEGENDARY+",
-        "unitprice": 19061000.0
+        "timestamp": 1742288835206,
+        "key": "WISE_WITHER_CHESTPLATE.ultimate_wisdom=5+MYTHIC+Necrotic+rarity_upgrade",
+        "unitprice": 38000000.0
     },
     {
-        "timestamp": 1741874032532,
+        "timestamp": 1742288836038,
+        "key": "BONZO_STAFF.ultimate_wise=5+RARE+",
+        "unitprice": 7788999.0
+    },
+    {
+        "timestamp": 1742288836829,
+        "key": "MITHRIL_DRILL_ENGINE.+RARE+",
+        "unitprice": 17500000.0
+    },
+    {
+        "timestamp": 1742288836877,
+        "key": "PET.+LEGENDARY+",
+        "unitprice": 44900000.0
+    },
+    {
+        "timestamp": 1742288838494,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 1330000.0
+    },
+    {
+        "timestamp": 1742288840372,
+        "key": "RANCHERS_BOOTS.+EPIC+",
+        "unitprice": 4200000.0
+    },
+    {
+        "timestamp": 1742288840520,
         "key": "GOD_POTION_2.+SPECIAL+",
-        "unitprice": 2200000.0
-    },
-    {
-        "timestamp": 1741874032738,
-        "key": "ZOMBIE_COMMANDER_LEGGINGS.+EPIC+Wise",
-        "unitprice": 210000.0
-    },
-    {
-        "timestamp": 1741874032814,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 160000.0
-    },
-    {
-        "timestamp": 1741874033814,
-        "key": "SHADOW_FURY.+LEGENDARY+",
-        "unitprice": 38499000.0
-    },
-    {
-        "timestamp": 1741874034147,
-        "key": "PET_ITEM_MINING_SKILL_BOOST_RARE.+RARE+",
-        "unitprice": 25000.0
-    },
-    {
-        "timestamp": 1741874034742,
-        "key": "LAVA_TALISMAN.+COMMON,UNCOMMON+",
-        "unitprice": 90000.0
-    },
-    {
-        "timestamp": 1741874035229,
-        "key": "AURORA_LEGGINGS.+LEGENDARY+",
-        "unitprice": 500000.0
-    },
-    {
-        "timestamp": 1741874035527,
-        "key": "YOUNG_DRAGON_BOOTS.+LEGENDARY+",
-        "unitprice": 600000.0
-    },
-    {
-        "timestamp": 1741874035741,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 160000.0
-    },
-    {
-        "timestamp": 1741874035822,
-        "key": "ZOMBIE_LORD_LEGGINGS.+EPIC+Fierce",
-        "unitprice": 250000.0
-    },
-    {
-        "timestamp": 1741874036073,
-        "key": "PIGGY_BANK.+COMMON,UNCOMMON+",
-        "unitprice": 480000.0
-    },
-    {
-        "timestamp": 1741874036548,
-        "key": "WOOD_TALISMAN.+COMMON,UNCOMMON+",
-        "unitprice": 94999.0
-    },
-    {
-        "timestamp": 1741874036701,
-        "key": "ATMOSPHERIC_FILTER.+RARE+",
-        "unitprice": 999999.0
-    },
-    {
-        "timestamp": 1741874036801,
-        "key": "COCO_CHOPPER.+EPIC+",
         "unitprice": 2000000.0
     },
     {
-        "timestamp": 1741874036913,
-        "key": "RANCHERS_BOOTS.+EPIC+",
-        "unitprice": 3000000.0
-    },
-    {
-        "timestamp": 1741874036934,
-        "key": "ZOMBIE_COMMANDER_HELMET.+EPIC+Heavy",
-        "unitprice": 250000.0
-    },
-    {
-        "timestamp": 1741874037020,
-        "key": "GOD_POTION_2.+SPECIAL+",
-        "unitprice": 2200000.0
-    },
-    {
-        "timestamp": 1741874037433,
-        "key": "GREEN_BANDANA.+EPIC+",
-        "unitprice": 1180000.0
-    },
-    {
-        "timestamp": 1741874038066,
-        "key": "ADAPTIVE_BOOTS.+EPIC+Fierce",
-        "unitprice": 690000.0
-    },
-    {
-        "timestamp": 1741874038691,
-        "key": "SHADOW_ASSASSIN_LEGGINGS.+EPIC+",
-        "unitprice": 3500000.0
-    },
-    {
-        "timestamp": 1741874038732,
-        "key": "GIANTS_SWORD.ultimate_one_for_all=1+MYTHIC+Fabled,Giant+rarity_upgrade",
-        "unitprice": 120000000.0
-    },
-    {
-        "timestamp": 1741874039394,
-        "key": "SEA_LANTERN_HAT.+COMMON,UNCOMMON+",
-        "unitprice": 45000.0
-    },
-    {
-        "timestamp": 1741874039499,
-        "key": "ZOMBIE_COMMANDER_BOOTS.+EPIC+Wise",
-        "unitprice": 250000.0
-    },
-    {
-        "timestamp": 1741874039784,
-        "key": "SUPERIOR_DRAGON_BOOTS.+MYTHIC++rarity_upgrade",
-        "unitprice": 18420000.0
-    },
-    {
-        "timestamp": 1741874040048,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 220000.0
-    },
-    {
-        "timestamp": 1741874040217,
-        "key": "ZOMBIE_LORD_CHESTPLATE.+EPIC+Wise",
-        "unitprice": 350000.0
-    },
-    {
-        "timestamp": 1741874041007,
-        "key": "WHEEL_OF_FATE.+RARE+",
-        "unitprice": 16900000.0
-    },
-    {
-        "timestamp": 1741874041224,
-        "key": "GOD_POTION_2.+SPECIAL+",
-        "unitprice": 2400000.0
-    },
-    {
-        "timestamp": 1741874041268,
-        "key": "EMERALD_BLADE.+EPIC+",
-        "unitprice": 300000.0
-    },
-    {
-        "timestamp": 1741874041327,
-        "key": "ATTRIBUTE_SHARD.+COMMON+",
-        "unitprice": 3700000.0
-    },
-    {
-        "timestamp": 1741874041459,
-        "key": "BUILDERS_WAND.+LEGENDARY+",
-        "unitprice": 18900000.0
-    },
-    {
-        "timestamp": 1741874043620,
-        "key": "GOBLIN_HELMET.+RARE+",
-        "unitprice": 2222.0
-    },
-    {
-        "timestamp": 1741874043699,
-        "key": "HURRICANE_BOW.+EPIC+",
-        "unitprice": 6000000.0
-    },
-    {
-        "timestamp": 1741874043963,
-        "key": "PET.+LEGENDARY+",
-        "unitprice": 799000.0
-    },
-    {
-        "timestamp": 1741874044114,
-        "key": "ZOMBIE_LORD_HELMET.+EPIC+Fierce",
-        "unitprice": 980000.0
-    },
-    {
-        "timestamp": 1741874045402,
-        "key": "CAKE_COUNTER.+EPIC+",
-        "unitprice": 350000.0
-    },
-    {
-        "timestamp": 1741874046281,
-        "key": "THEORETICAL_HOE_POTATO_1.+COMMON+",
-        "unitprice": 2100000.0
-    },
-    {
-        "timestamp": 1741874046898,
-        "key": "AURORA_HELMET.+LEGENDARY+Wise",
-        "unitprice": 450000.0
-    },
-    {
-        "timestamp": 1741874047909,
-        "key": "ADAPTIVE_BOOTS.+EPIC+",
+        "timestamp": 1742288841393,
+        "key": "TAURUS_HELMET.+RARE+",
         "unitprice": 149999.0
     },
     {
-        "timestamp": 1741874048466,
-        "key": "YOUNG_DRAGON_LEGGINGS.+LEGENDARY+",
-        "unitprice": 999999.0
+        "timestamp": 1742288841940,
+        "key": "SOULS_REBOUND.+EPIC+",
+        "unitprice": 2200000.0
     },
     {
-        "timestamp": 1741874048661,
-        "key": "ZOMBIE_LORD_BOOTS.+EPIC+",
-        "unitprice": 2150000.0
+        "timestamp": 1742288842602,
+        "key": "GREEN_BANDANA.+EPIC+",
+        "unitprice": 3680000.0
     },
     {
-        "timestamp": 1741874048940,
-        "key": "ROTTEN_LEGGINGS.+RARE+",
-        "unitprice": 5000.0
+        "timestamp": 1742288843347,
+        "key": "AURORA_HELMET.+LEGENDARY+",
+        "unitprice": 1000000.0
+    },
+    {
+        "timestamp": 1742288843716,
+        "key": "PET_ITEM_FARMING_SKILL_BOOST_UNCOMMON.+COMMON,UNCOMMON+",
+        "unitprice": 19000.0
+    },
+    {
+        "timestamp": 1742288844104,
+        "key": "MINERAL_BOOTS.+EPIC+",
+        "unitprice": 2200000.0
+    },
+    {
+        "timestamp": 1742288845386,
+        "key": "GRAVITY_TALISMAN.+COMMON,UNCOMMON+",
+        "unitprice": 80000.0
+    },
+    {
+        "timestamp": 1742288845628,
+        "key": "PEST_REPELLENT_MAX.+RARE+",
+        "unitprice": 320000.0
+    },
+    {
+        "timestamp": 1742288845862,
+        "key": "GLACITE_BOOTS.+LEGENDARY++rarity_upgrade",
+        "unitprice": 888888.0
+    },
+    {
+        "timestamp": 1742288847752,
+        "key": "ARMOR_OF_YOG_HELMET.+EPIC+",
+        "unitprice": 499000.0
+    },
+    {
+        "timestamp": 1742288849213,
+        "key": "ARMOR_OF_YOG_HELMET.+EPIC+",
+        "unitprice": 499000.0
+    },
+    {
+        "timestamp": 1742288850901,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 5200000.0
+    },
+    {
+        "timestamp": 1742288852262,
+        "key": "HUNTER_RING.+RARE+",
+        "unitprice": 32999996.0
+    },
+    {
+        "timestamp": 1742288856205,
+        "key": "VACCINE_RING.+COMMON,UNCOMMON+",
+        "unitprice": 2800000.0
+    },
+    {
+        "timestamp": 1742288856933,
+        "key": "ASPECT_OF_THE_END.+RARE+",
+        "unitprice": 980000.0
+    },
+    {
+        "timestamp": 1742288857434,
+        "key": "LOTUS_NECKLACE.+RARE+",
+        "unitprice": 6800000.0
+    },
+    {
+        "timestamp": 1742288857468,
+        "key": "SLIME_BOW.+EPIC+",
+        "unitprice": 2400000.0
+    },
+    {
+        "timestamp": 1742288859608,
+        "key": "TANK_MINER_BOOTS.+RARE+",
+        "unitprice": 34000.0
+    },
+    {
+        "timestamp": 1742288859811,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 5200000.0
+    },
+    {
+        "timestamp": 1742288860947,
+        "key": "VELVET_TOP_HAT.+RARE+",
+        "unitprice": 400000.0
+    },
+    {
+        "timestamp": 1742288864129,
+        "key": "UNSTABLE_DRAGON_LEGGINGS.+LEGENDARY+",
+        "unitprice": 1200000.0
+    },
+    {
+        "timestamp": 1742288866506,
+        "key": "LOTUS_BELT.+RARE+",
+        "unitprice": 8000000.0
+    },
+    {
+        "timestamp": 1742288866945,
+        "key": "AURORA_HELMET.+LEGENDARY+",
+        "unitprice": 810000.0
+    },
+    {
+        "timestamp": 1742288867175,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 850000.0
+    },
+    {
+        "timestamp": 1742288868033,
+        "key": "PET.+RARE+",
+        "unitprice": 4000.0
+    },
+    {
+        "timestamp": 1742288868107,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 5299000.0
+    },
+    {
+        "timestamp": 1742288868584,
+        "key": "SILVER_FANG.+COMMON,UNCOMMON+",
+        "unitprice": 13281.25
+    },
+    {
+        "timestamp": 1742288871435,
+        "key": "CAKE_SOUL.+MYTHIC+",
+        "unitprice": 7000000.0
+    },
+    {
+        "timestamp": 1742288873639,
+        "key": "PEST_REPELLENT_MAX.+RARE+",
+        "unitprice": 330000.0
+    },
+    {
+        "timestamp": 1742288874414,
+        "key": "PRISMARINE_BLADE.+COMMON,UNCOMMON+",
+        "unitprice": 160000.0
+    },
+    {
+        "timestamp": 1742288875096,
+        "key": "PET_ITEM_MINING_SKILL_BOOST_RARE.+RARE+",
+        "unitprice": 40000.0
+    },
+    {
+        "timestamp": 1742288875773,
+        "key": "ZOMBIE_KNIGHT_SWORD.+EPIC+Sharp",
+        "unitprice": 90000.0
+    },
+    {
+        "timestamp": 1742288875789,
+        "key": "FIRE_FREEZE_STAFF.+EPIC+",
+        "unitprice": 280000.0
+    },
+    {
+        "timestamp": 1742288876437,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 5299000.0
+    },
+    {
+        "timestamp": 1742288877561,
+        "key": "PEST_REPELLENT_MAX.+RARE+",
+        "unitprice": 320000.0
+    },
+    {
+        "timestamp": 1742288878382,
+        "key": "PET.+EPIC+",
+        "unitprice": 16900000.0
+    },
+    {
+        "timestamp": 1742288878884,
+        "key": "NETHERRACK_LOOKING_SUNSHADE.+COMMON+",
+        "unitprice": 50000.0
+    },
+    {
+        "timestamp": 1742288879216,
+        "key": "AURORA_BOOTS.+LEGENDARY+",
+        "unitprice": 1299000.0
+    },
+    {
+        "timestamp": 1742288879600,
+        "key": "PET.+LEGENDARY+",
+        "unitprice": 38000000.0
+    },
+    {
+        "timestamp": 1742288882111,
+        "key": "PEST_REPELLENT_MAX.+RARE+",
+        "unitprice": 320000.0
+    },
+    {
+        "timestamp": 1742288882689,
+        "key": "FERVOR_LEGGINGS.+LEGENDARY+",
+        "unitprice": 3790000.0
+    },
+    {
+        "timestamp": 1742288883236,
+        "key": "INFERNO_ROD.+LEGENDARY++rarity_upgrade",
+        "unitprice": 82990000.0
+    },
+    {
+        "timestamp": 1742288884957,
+        "key": "THE_SHREDDER.+LEGENDARY+",
+        "unitprice": 3449999.0
+    },
+    {
+        "timestamp": 1742288886863,
+        "key": "PEST_REPELLENT_MAX.+RARE+",
+        "unitprice": 320000.0
+    },
+    {
+        "timestamp": 1742288887730,
+        "key": "PET.+LEGENDARY+",
+        "unitprice": 950000.0
+    },
+    {
+        "timestamp": 1742288887819,
+        "key": "ATTRIBUTE_SHARD.+COMMON+",
+        "unitprice": 5500000.0
+    },
+    {
+        "timestamp": 1742288889172,
+        "key": "PET.+EPIC+",
+        "unitprice": 1800000.0
+    },
+    {
+        "timestamp": 1742288889387,
+        "key": "GLACITE_CHESTPLATE.+EPIC+",
+        "unitprice": 9999.0
+    },
+    {
+        "timestamp": 1742288889689,
+        "key": "RAZOR_SHARP_SHARK_TOOTH_NECKLACE.+MYTHIC++rarity_upgrade",
+        "unitprice": 24000000.0
     }
 ]

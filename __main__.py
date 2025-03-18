@@ -25,14 +25,6 @@ def decode_item_bytes(b):
             unpacked_nbt[key] = value.decode('utf-8')
     return unpacked_nbt
 
-def fetch(url):
-    response = requests.get(url)
-    try:
-        return response.json()
-    except requests.exceptions.JSONDecodeError:
-        print("Error: Received invalid JSON from", url)
-        return {}
-
 def main():
     print("Starting...")
     with open('options.json') as f:
