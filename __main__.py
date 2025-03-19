@@ -92,7 +92,7 @@ def main():
         ])) if x.get('attributes') else '')
     } for x in auctions]
 
-    # print(auctions)
+    # print(auctions)-
     try:
         with open('auctions2.json', 'w') as f:
             json.dump(auctions, f, indent=4)
