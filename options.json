@@ -10,7 +10,14 @@
         "ultimate_one_for_all": [1],
         "ultimate_rend": [1,2,3,4,5],
         "ultimate_soul_eater": [1,2,3,4,5],
-        "ultimate_swarm": [1,2,3,4,5]
+        "ultimate_swarm": [1,2,3,4,5],
+        "ultimate_refrigerate": [1,2,3,4,5],
+        "ultimate_flowstate": [1,2,3,4,5]
+    },
+
+    "regular_relevant_enchants": {
+            "efficiency": [10],
+            "giant_killer": [7]
     },
 
     "rarities":[
