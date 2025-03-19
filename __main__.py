@@ -63,7 +63,7 @@ def main():
         'ench1': x['detail']['tag'].get('ench'),
         'ench2': x['detail']['tag']['ExtraAttributes'].get('enchantments'),
         'recomb': x['detail']['tag']['ExtraAttributes'].get('rarity_upgrades'),
-        'color': x['detail']['tag']['display'].get('color'),
+        'color': str(x['detail']['tag']['display'].get('color')) if x['detail']['tag']['display'].get('color') is not None else None,
         'attributes': x['detail']['tag']['ExtraAttributes'].get('attributes'),
         'lore': [l.replace('§.', '') for l in x['detail']['tag']['display'].get('Lore', [])],
         'name': x['detail']['tag']['display'].get('Name'),
@@ -86,10 +86,10 @@ def main():
             r for r in options['reforges'] if r in x['name']
         ]) +
         ('+rarity_upgrade' if x['recomb'] else '') +
-        ('+color=' if x['color'] else '') +
-        ('+' + ','.join([
+        (('+color=' + str(x['color'])) if 'color' in x else '') +
+        (('+' + ','.join([
             f"{a}={x['attributes'][a]}" for a in x['attributes']
-        ]) if x.get('attributes') else '')
+        ])) if x.get('attributes') else '')
     } for x in auctions]
 
     # print(auctions)
