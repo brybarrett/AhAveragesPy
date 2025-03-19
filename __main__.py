@@ -63,6 +63,8 @@ def main():
         'ench1': x['detail']['tag'].get('ench'),
         'ench2': x['detail']['tag']['ExtraAttributes'].get('enchantments'),
         'recomb': x['detail']['tag']['ExtraAttributes'].get('rarity_upgrades'),
+        'color': x['detail']['tag']['display'].get('color'),
+        'attributes': x['detail']['tag']['ExtraAttributes'].get('attributes'),
         'lore': [l.replace('§.', '') for l in x['detail']['tag']['display'].get('Lore', [])],
         'name': x['detail']['tag']['display'].get('Name'),
         'id': x['detail']['tag']['ExtraAttributes'].get('id')
@@ -70,10 +72,24 @@ def main():
 
     auctions = [{
         **x,
-        'key': x['id'] + '.' + (','.join([f"{e}={x['ench2'][e]}" for e in options['relevant_enchants'] if x.get('ench2') and e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]]) if x.get('ench2') else '') +
-        '+' + ','.join([r for r in options['rarities'] if any(l for l in x['lore'] if r in l)]) +
-        '+' + ','.join([r for r in options['reforges'] if r in x['name']]) +
-        ('+rarity_upgrade' if x['recomb'] else '')
+        'key': x['id'] + '.' +
+        (','.join([
+            f"{e}={x['ench2'][e]}" for e in options['relevant_enchants']
+            if x.get('ench2') and e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
+        ]) if x.get('ench2') else ''
+        ) +
+        '+' + ','.join([
+            r for r in options['rarities']
+            if any(l for l in x['lore'] if r in l)
+        ]) +
+        '+' + ','.join([
+            r for r in options['reforges'] if r in x['name']
+        ]) +
+        ('+rarity_upgrade' if x['recomb'] else '') +
+        ('+color' if x['color'] else '') +
+        ('+' + ','.join([
+            f"{a}={x['attributes'][a]}" for a in x['attributes']
+        ]) if x.get('attributes') else '')
     } for x in auctions]
 
     # print(auctions)

@@ -27,7 +27,10 @@ def create_item_key(raw_item):
         'lore': item['tag']['display'].get('Lore', []),
         'ench1': item['tag'].get('ench', []),
         'ench2': item['tag']['ExtraAttributes'].get('enchantments', []),
-        'recomb': item['tag']['ExtraAttributes'].get('rarity_upgrades', [])
+        'recomb': item['tag']['ExtraAttributes'].get('rarity_upgrades', []),
+        'color': item['tag']['display'].get('color', 0),
+        'attributes': item['tag']['ExtraAttributes'].get('attributes', []),
+
     }
     return key
 
