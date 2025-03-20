@@ -86,7 +86,7 @@ def main():
             r for r in options['reforges'] if r in x['name']
         ]) +
         ('+rarity_upgrade' if x['recomb'] else '') +
-        (('+color=' + str(x['color'])) if 'color' in x else '') +
+        (('+color=' + str(x['color'])) if x.get('color') is not None else '') +
         (('+' + ','.join([
             f"{a}={x['attributes'][a]}" for a in x['attributes']
         ])) if x.get('attributes') else '')
