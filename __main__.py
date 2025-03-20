@@ -73,23 +73,23 @@ def main():
     auctions = [{
         **x,
         'key': x['id'] + '.' +
-        (','.join([
-            f"{e}={x['ench2'][e]}" for e in options['relevant_enchants']
-            if x.get('ench2') and e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
-        ]) if x.get('ench2') else ''
-        ) +
-        '+' + ','.join([
-            r for r in options['rarities']
-            if any(l for l in x['lore'] if r in l)
-        ]) +
-        '+' + ','.join([
-            r for r in options['reforges'] if r in x['name']
-        ]) +
-        ('+rarity_upgrade' if x['recomb'] else '') +
-        (('+color=' + str(x['color'])) if x.get('color') is not None else '') +
-        (('+' + ','.join([
-            f"{a}={x['attributes'][a]}" for a in x['attributes']
-        ])) if x.get('attributes') else '')
+               (','.join([
+                   f"{e}={x['ench2'][e]}" for e in options['relevant_enchants']
+                   if x.get('ench2') and e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
+               ]) if x.get('ench2') else ''
+               ) +
+               '+' + ','.join([
+                   r for r in options['rarities']
+                   if r in x['lore']
+               ]) +
+               '+' + ','.join([
+                   r for r in options['reforges'] if r in x['name']
+               ]) +
+               ('+rarity_upgrade' if x['recomb'] else '') +
+               (('+color=' + str(x['color'])) if x.get('color') is not None else '') +
+               (('+' + ','.join([
+                   f"{a}={x['attributes'][a]}" for a in x['attributes']
+               ])) if x.get('attributes') else '')
     } for x in auctions]
 
     # print(auctions)-

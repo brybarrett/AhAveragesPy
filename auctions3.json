@@ -1,627 +1,832 @@
 [
     {
-        "timestamp": 1742380175172,
-        "key": "TITANIUM_DRILL_1.+EPIC+",
-        "unitprice": 28750000.0
+        "timestamp": 1742480974064,
+        "key": "GHAST_CLOAK.+++life_regeneration=1,speed=1",
+        "unitprice": 500000.0
     },
     {
-        "timestamp": 1742380175517,
-        "key": "MOLTEN_CLOAK.+EPIC++veteran=5,fortitude=4",
-        "unitprice": 4999999.0
+        "timestamp": 1742480974186,
+        "key": "TAURUS_HELMET.+++fishing_experience=1,arachno_resistance=1",
+        "unitprice": 380000.0
     },
     {
-        "timestamp": 1742380177058,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2400000.0
-    },
-    {
-        "timestamp": 1742380177463,
-        "key": "PET.+LEGENDARY+",
-        "unitprice": 44500000.0
-    },
-    {
-        "timestamp": 1742380177924,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1000000.0
-    },
-    {
-        "timestamp": 1742380178307,
-        "key": "ASPECT_OF_THE_END.+RARE+",
-        "unitprice": 919998.0
-    },
-    {
-        "timestamp": 1742380178996,
-        "key": "MITHRIL_DRILL_2.+RARE+",
-        "unitprice": 25000000.0
-    },
-    {
-        "timestamp": 1742380179224,
-        "key": "DWARF_TURTLE_SHELMET.+RARE+",
-        "unitprice": 450000.0
-    },
-    {
-        "timestamp": 1742380180381,
-        "key": "GREATER_BACKPACK.+EPIC+",
-        "unitprice": 799000.0
-    },
-    {
-        "timestamp": 1742380180481,
-        "key": "MOLTEN_CLOAK.+EPIC++veteran=5,dominance=4",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1742380180650,
-        "key": "KAT_FLOWER.+SPECIAL+",
-        "unitprice": 790000.0
-    },
-    {
-        "timestamp": 1742380180804,
-        "key": "DARK_CACAO_TRUFFLE.+RARE+",
-        "unitprice": 300000.0
-    },
-    {
-        "timestamp": 1742380181956,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2550000.0
-    },
-    {
-        "timestamp": 1742380183134,
-        "key": "THEORETICAL_HOE.+COMMON+",
-        "unitprice": 1500000.0
-    },
-    {
-        "timestamp": 1742380183629,
-        "key": "DARK_CACAO_TRUFFLE.+RARE+",
-        "unitprice": 300000.0
-    },
-    {
-        "timestamp": 1742380183680,
-        "key": "MINING_1_TRAVEL_SCROLL.+RARE+",
-        "unitprice": 529999.0
-    },
-    {
-        "timestamp": 1742380183739,
-        "key": "MITHRIL_PICKAXE.+COMMON,UNCOMMON+",
-        "unitprice": 600000.0
-    },
-    {
-        "timestamp": 1742380183803,
-        "key": "FINAL_DESTINATION_BOOTS.+LEGENDARY++color",
-        "unitprice": 3190000.0
-    },
-    {
-        "timestamp": 1742380184505,
-        "key": "KAT_FLOWER.+SPECIAL+",
-        "unitprice": 790000.0
-    },
-    {
-        "timestamp": 1742380184667,
-        "key": "PET.+EPIC+",
-        "unitprice": 29000000.0
-    },
-    {
-        "timestamp": 1742380184738,
-        "key": "MOLTEN_CLOAK.+EPIC++veteran=5,experience=4",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1742380185126,
-        "key": "JERRY_STAFF.+EPIC+",
-        "unitprice": 749000.0
-    },
-    {
-        "timestamp": 1742380185221,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2555555.0
-    },
-    {
-        "timestamp": 1742380185240,
-        "key": "DWARF_TURTLE_SHELMET.+RARE+",
-        "unitprice": 450000.0
-    },
-    {
-        "timestamp": 1742380185506,
-        "key": "BIOHAZARD_SUIT.+COMMON,UNCOMMON++color",
-        "unitprice": 2999000.0
-    },
-    {
-        "timestamp": 1742380186134,
-        "key": "DARK_CACAO_TRUFFLE.+RARE+",
-        "unitprice": 320000.0
-    },
-    {
-        "timestamp": 1742380186380,
-        "key": "GOBLIN_OMELETTE_SPICY.+RARE+",
-        "unitprice": 16195000.0
-    },
-    {
-        "timestamp": 1742380186493,
-        "key": "SILVER_FANG.+COMMON,UNCOMMON+",
-        "unitprice": 49000.0
-    },
-    {
-        "timestamp": 1742380187147,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1100000.0
-    },
-    {
-        "timestamp": 1742380187236,
-        "key": "SORROW_BOOTS.+LEGENDARY+",
-        "unitprice": 1400000.0
-    },
-    {
-        "timestamp": 1742380187280,
-        "key": "FAIRY_HELMET.+RARE++color",
-        "unitprice": 12000.0
-    },
-    {
-        "timestamp": 1742380188595,
-        "key": "LOTUS_CLOAK.+RARE+",
-        "unitprice": 3300000.0
-    },
-    {
-        "timestamp": 1742380188691,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2600000.0
-    },
-    {
-        "timestamp": 1742380188955,
-        "key": "MOLTEN_CLOAK.+EPIC++veteran=5,arachno_resistance=4",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1742380189283,
-        "key": "GOBLIN_OMELETTE_SPICY.+RARE+",
-        "unitprice": 16200000.0
-    },
-    {
-        "timestamp": 1742380190035,
-        "key": "STARRED_SHADOW_ASSASSIN_HELMET.+LEGENDARY+Fierce",
-        "unitprice": 4000000.0
-    },
-    {
-        "timestamp": 1742380190040,
-        "key": "ROD_OF_THE_SEA.+LEGENDARY+",
-        "unitprice": 23333333.0
-    },
-    {
-        "timestamp": 1742380190048,
-        "key": "EMERALD_BLADE.+EPIC+",
-        "unitprice": 439000.0
-    },
-    {
-        "timestamp": 1742380191784,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2600000.0
-    },
-    {
-        "timestamp": 1742380192332,
-        "key": "FAIRY_BOOTS.+RARE++color",
-        "unitprice": 15000.0
-    },
-    {
-        "timestamp": 1742380192415,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1240000.0
-    },
-    {
-        "timestamp": 1742380192894,
-        "key": "MOLTEN_CLOAK.+EPIC++veteran=5,dominance=4",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1742380194859,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2900000.0
-    },
-    {
-        "timestamp": 1742380195005,
-        "key": "UPGRADE_STONE_FROST.+RARE+",
-        "unitprice": 8999000.0
-    },
-    {
-        "timestamp": 1742380195852,
-        "key": "MOOGMA_LEGGINGS.+RARE+Necrotic+color+blazing_fortune=2,fishing_experience=3",
-        "unitprice": 1390000.0
-    },
-    {
-        "timestamp": 1742380195892,
-        "key": "THEORETICAL_HOE.+COMMON+",
-        "unitprice": 1500000.0
-    },
-    {
-        "timestamp": 1742380195929,
-        "key": "PET.+COMMON+",
-        "unitprice": 150000.0
-    },
-    {
-        "timestamp": 1742380197024,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1267100.0
-    },
-    {
-        "timestamp": 1742380197064,
-        "key": "PEST_VEST.+EPIC+",
-        "unitprice": 19380000.0
-    },
-    {
-        "timestamp": 1742380197109,
-        "key": "GLACITE_HELMET.+EPIC+",
-        "unitprice": 10000.0
-    },
-    {
-        "timestamp": 1742380197223,
-        "key": "STARRED_SHADOW_FURY.ultimate_combo=5+MYTHIC++rarity_upgrade",
-        "unitprice": 55000000.0
-    },
-    {
-        "timestamp": 1742380197584,
-        "key": "PET_ITEM_SPOOKY_CUPCAKE.+COMMON,UNCOMMON+",
-        "unitprice": 50000.0
-    },
-    {
-        "timestamp": 1742380197633,
-        "key": "ICY_SINKER.+RARE+",
-        "unitprice": 10000.0
-    },
-    {
-        "timestamp": 1742380197696,
-        "key": "LAVA_TALISMAN.+COMMON,UNCOMMON+",
-        "unitprice": 95000.0
-    },
-    {
-        "timestamp": 1742380198068,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2900000.0
-    },
-    {
-        "timestamp": 1742380198947,
-        "key": "INFINI_VACUUM_HOOVERIUS.+LEGENDARY+",
-        "unitprice": 22000000.0
-    },
-    {
-        "timestamp": 1742380199088,
-        "key": "VENOMS_TOUCH.+EPIC+",
-        "unitprice": 670000.0
-    },
-    {
-        "timestamp": 1742380199422,
-        "key": "FAIRY_CHESTPLATE.+RARE++color",
-        "unitprice": 19000.0
-    },
-    {
-        "timestamp": 1742380200621,
-        "key": "SHARK_SCALE_BOOTS.+LEGENDARY++color",
-        "unitprice": 1699000.0
-    },
-    {
-        "timestamp": 1742380201100,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1250000.0
-    },
-    {
-        "timestamp": 1742380201920,
-        "key": "SILENT_DEATH.+RARE+Sharp",
-        "unitprice": 198899.0
-    },
-    {
-        "timestamp": 1742380201974,
-        "key": "GLACITE_LEGGINGS.+EPIC++color",
-        "unitprice": 11999.0
-    },
-    {
-        "timestamp": 1742380203230,
-        "key": "STARRED_SHADOW_ASSASSIN_LEGGINGS.ultimate_wisdom=2+MYTHIC++rarity_upgrade",
-        "unitprice": 11500000.0
-    },
-    {
-        "timestamp": 1742380203542,
-        "key": "STONK_PICKAXE.+EPIC+",
-        "unitprice": 689000.0
-    },
-    {
-        "timestamp": 1742380203782,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2900000.0
-    },
-    {
-        "timestamp": 1742380203911,
-        "key": "BAT_ARTIFACT.+LEGENDARY+",
-        "unitprice": 3421999.0
-    },
-    {
-        "timestamp": 1742380204477,
-        "key": "MITHRIL_DRILL_ENGINE.+RARE+",
-        "unitprice": 17500000.0
-    },
-    {
-        "timestamp": 1742380204796,
-        "key": "BLADE_OF_THE_VOLCANO.+RARE++undead=1,arachno=1",
-        "unitprice": 70000.0
-    },
-    {
-        "timestamp": 1742380205388,
-        "key": "PET.+MYTHIC+",
-        "unitprice": 5000000.0
-    },
-    {
-        "timestamp": 1742380205425,
-        "key": "PET.+EPIC+",
-        "unitprice": 259999.0
-    },
-    {
-        "timestamp": 1742380205798,
-        "key": "STRONG_DRAGON_HELMET.+LEGENDARY+Strong",
-        "unitprice": 1230000.0
-    },
-    {
-        "timestamp": 1742380205908,
-        "key": "MAGICAL_LAVA_BUCKET.+COMMON,UNCOMMON+",
-        "unitprice": 100000.0
-    },
-    {
-        "timestamp": 1742380206331,
-        "key": "CRIMSON_LEGGINGS.+LEGENDARY++color+mending=6,fortitude=4",
-        "unitprice": 3000000.0
-    },
-    {
-        "timestamp": 1742380206407,
-        "key": "VACCINE_ARTIFACT.+RARE+",
-        "unitprice": 9990000.0
-    },
-    {
-        "timestamp": 1742380206988,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2900000.0
-    },
-    {
-        "timestamp": 1742380206993,
-        "key": "FAIRY_LEGGINGS.+RARE++color",
-        "unitprice": 30000.0
-    },
-    {
-        "timestamp": 1742380207226,
-        "key": "GLACITE_BOOTS.+EPIC++color",
-        "unitprice": 20000.0
-    },
-    {
-        "timestamp": 1742380207515,
-        "key": "KAT_FLOWER.+SPECIAL+",
-        "unitprice": 790000.0
-    },
-    {
-        "timestamp": 1742380207790,
-        "key": "SHARK_SCALE_LEGGINGS.+LEGENDARY++color",
-        "unitprice": 2499000.0
-    },
-    {
-        "timestamp": 1742380207838,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1267100.0
-    },
-    {
-        "timestamp": 1742380208108,
-        "key": "DANGER_2_TRAVEL_SCROLL.+RARE+",
-        "unitprice": 550000.0
-    },
-    {
-        "timestamp": 1742380209405,
-        "key": "GOLEM_SWORD.+RARE+",
-        "unitprice": 480000.0
-    },
-    {
-        "timestamp": 1742380210348,
-        "key": "THUNDER_IN_A_BOTTLE.+EPIC+",
-        "unitprice": 2900000.0
-    },
-    {
-        "timestamp": 1742380211212,
-        "key": "LOTUS_NECKLACE.+RARE+",
-        "unitprice": 2999000.0
-    },
-    {
-        "timestamp": 1742380212065,
-        "key": "GOBLIN_LEGGINGS.+RARE++color",
-        "unitprice": 1000.0
-    },
-    {
-        "timestamp": 1742380212675,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1290000.0
-    },
-    {
-        "timestamp": 1742380212952,
-        "key": "PET.+LEGENDARY+",
-        "unitprice": 24900000.0
-    },
-    {
-        "timestamp": 1742380215861,
-        "key": "PET.+COMMON,UNCOMMON+",
-        "unitprice": 8470000.0
-    },
-    {
-        "timestamp": 1742380216255,
-        "key": "BAYOU_TRAVEL_SCROLL.+RARE+",
-        "unitprice": 4400000.0
-    },
-    {
-        "timestamp": 1742380216478,
-        "key": "TREASURE_TALISMAN.+RARE+",
-        "unitprice": 1290000.0
-    },
-    {
-        "timestamp": 1742380216818,
-        "key": "GLACITE_CHESTPLATE.+EPIC++color",
-        "unitprice": 20000.0
-    },
-    {
-        "timestamp": 1742380217502,
-        "key": "CHALLENGE_ROD.+COMMON,UNCOMMON+",
-        "unitprice": 390000.0
-    },
-    {
-        "timestamp": 1742380217687,
-        "key": "AUTOPET_RULES_2.+SPECIAL+",
-        "unitprice": 29200000.0
-    },
-    {
-        "timestamp": 1742380217781,
-        "key": "PRESTIGE_CHOCOLATE_REALM.+LEGENDARY+",
-        "unitprice": 687000.0
-    },
-    {
-        "timestamp": 1742380218333,
-        "key": "GOBLIN_BOOTS.+RARE++color",
-        "unitprice": 1000.0
-    },
-    {
-        "timestamp": 1742380218641,
-        "key": "HANDY_BLOOD_CHALICE.+COMMON+",
-        "unitprice": 849000.0
-    },
-    {
-        "timestamp": 1742380221026,
-        "key": "WATER_HYDRA_HEAD.+EPIC+",
-        "unitprice": 1499000.0
-    },
-    {
-        "timestamp": 1742380221933,
-        "key": "THUNDER_IN_A_BOTTLE_EMPTY.+EPIC+",
-        "unitprice": 350000.0
-    },
-    {
-        "timestamp": 1742380223059,
-        "key": "WAND_OF_RESTORATION.+EPIC+",
+        "timestamp": 1742480974214,
+        "key": "WATER_HYDRA_HEAD.++",
         "unitprice": 2000000.0
     },
     {
-        "timestamp": 1742380223878,
-        "key": "STARRED_BONZO_STAFF.ultimate_wise=5+RARE+Heroic",
-        "unitprice": 13999000.0
+        "timestamp": 1742480975156,
+        "key": "ASPECT_OF_THE_END.++",
+        "unitprice": 939000.0
     },
     {
-        "timestamp": 1742380223982,
-        "key": "FARMER_ORB.+COMMON,UNCOMMON+",
-        "unitprice": 378000.0
+        "timestamp": 1742480975520,
+        "key": "ZOMBIE_COMMANDER_WHIP.+++rarity_upgrade",
+        "unitprice": 1499999.0
     },
     {
-        "timestamp": 1742380224163,
-        "key": "COMMON_HOOK.+COMMON,RARE+",
-        "unitprice": 135000.0
+        "timestamp": 1742480975768,
+        "key": "PESTHUNTER_BADGE.++",
+        "unitprice": 700000.0
     },
     {
-        "timestamp": 1742380224313,
-        "key": "WATER_HYDRA_HEAD.+EPIC+",
-        "unitprice": 1790000.0
+        "timestamp": 1742480976067,
+        "key": "LAPIS_ARMOR_HELMET.++",
+        "unitprice": 259999.0
     },
     {
-        "timestamp": 1742380225568,
-        "key": "ICY_SINKER.+RARE+",
-        "unitprice": 10000.0
+        "timestamp": 1742480976174,
+        "key": "ASPECT_OF_THE_DRAGON.++",
+        "unitprice": 1700000.0
     },
     {
-        "timestamp": 1742380225744,
-        "key": "MITHRIL_FUEL_TANK.+RARE+",
-        "unitprice": 13999999.0
+        "timestamp": 1742480977098,
+        "key": "MOLTEN_CLOAK.+++mending=5,magic_find=4",
+        "unitprice": 7000000.0
     },
     {
-        "timestamp": 1742380226084,
-        "key": "CHUMMING_TALISMAN.+COMMON,UNCOMMON+",
-        "unitprice": 333333.0
+        "timestamp": 1742480977238,
+        "key": "SPEED_WITHER_BOOTS.ultimate_last_stand=5+++rarity_upgrade+color=8077056",
+        "unitprice": 28900000.0
     },
     {
-        "timestamp": 1742380226567,
-        "key": "JUNK_ARTIFACT.+RARE+",
-        "unitprice": 8990000.0
+        "timestamp": 1742480977665,
+        "key": "SPEEDY_LINE.++",
+        "unitprice": 2700000.0
     },
     {
-        "timestamp": 1742380226944,
-        "key": "WATER_HYDRA_HEAD.+EPIC+",
-        "unitprice": 1790000.0
+        "timestamp": 1742480978067,
+        "key": "HOLY_DRAGON_HELMET.++",
+        "unitprice": 870000.0
     },
     {
-        "timestamp": 1742380227072,
-        "key": "GOBLIN_CHESTPLATE.+RARE++color",
-        "unitprice": 1500.0
+        "timestamp": 1742480979005,
+        "key": "WATER_HYDRA_HEAD.++",
+        "unitprice": 1900000.0
     },
     {
-        "timestamp": 1742380228050,
-        "key": "EINARY_RED_HOODIE.+RARE+",
-        "unitprice": 999999.0
+        "timestamp": 1742480979097,
+        "key": "PET.++",
+        "unitprice": 19999000.0
     },
     {
-        "timestamp": 1742380229602,
-        "key": "MITHRIL_FUEL_TANK.+RARE+",
-        "unitprice": 14000000.0
+        "timestamp": 1742480979274,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
     },
     {
-        "timestamp": 1742380230788,
-        "key": "LOTUS_BELT.+RARE+",
-        "unitprice": 2080000.0
+        "timestamp": 1742480979529,
+        "key": "FIRE_FURY_STAFF.+++midas_touch=1,undead=1",
+        "unitprice": 8000000.0
     },
     {
-        "timestamp": 1742380230822,
-        "key": "PERSONAL_COMPACTOR_4000.+COMMON,UNCOMMON+",
-        "unitprice": 799999.0
+        "timestamp": 1742480979572,
+        "key": "MITHRIL_DRILL_1.++",
+        "unitprice": 7400000.0
     },
     {
-        "timestamp": 1742380230826,
-        "key": "MAGMA_ROD.+RARE++trophy_hunter=9,fishing_speed=9",
-        "unitprice": 180000000.0
+        "timestamp": 1742480979647,
+        "key": "SPONGE_HELMET.++",
+        "unitprice": 899000.0
     },
     {
-        "timestamp": 1742380230900,
-        "key": "JUNGLE_AMULET.+COMMON,UNCOMMON+",
-        "unitprice": 1750000.0
+        "timestamp": 1742480979651,
+        "key": "RANCHERS_BOOTS.+++color=0",
+        "unitprice": 13000000.0
     },
     {
-        "timestamp": 1742380231107,
-        "key": "PET.+LEGENDARY+",
-        "unitprice": 37500000.0
+        "timestamp": 1742480979849,
+        "key": "RUNE.++",
+        "unitprice": 781.25
     },
     {
-        "timestamp": 1742380231295,
-        "key": "ROD_OF_THE_SEA.+LEGENDARY+",
-        "unitprice": 22500000.0
+        "timestamp": 1742480980345,
+        "key": "LAPIS_ARMOR_BOOTS.+++color=255",
+        "unitprice": 299999.0
     },
     {
-        "timestamp": 1742380231390,
-        "key": "WATER_HYDRA_HEAD.+EPIC+",
-        "unitprice": 1800000.0
+        "timestamp": 1742480980853,
+        "key": "STARRED_SHADOW_ASSASSIN_LEGGINGS.+++color=0",
+        "unitprice": 5900000.0
     },
     {
-        "timestamp": 1742380231467,
-        "key": "KAT_FLOWER.+SPECIAL+",
-        "unitprice": 790000.0
+        "timestamp": 1742480980917,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
     },
     {
-        "timestamp": 1742380231505,
-        "key": "FEATHER_ARTIFACT.+RARE+",
-        "unitprice": 699999.0
+        "timestamp": 1742480981274,
+        "key": "SKELETON_GRUNT_LEGGINGS.+++color=14805812",
+        "unitprice": 100000.0
     },
     {
-        "timestamp": 1742380232019,
-        "key": "TITANIUM_DRILL_4.+MYTHIC+Auspicious+rarity_upgrade",
-        "unitprice": 449000000.0
+        "timestamp": 1742480981316,
+        "key": "TALISMAN_ENRICHMENT_CRITICAL_CHANCE.++",
+        "unitprice": 7500000.0
     },
     {
-        "timestamp": 1742380232289,
-        "key": "POCKET_ESPRESSO_MACHINE.+COMMON+",
+        "timestamp": 1742480982080,
+        "key": "ASPECT_OF_THE_DRAGON.++Sharp",
+        "unitprice": 1500000.0
+    },
+    {
+        "timestamp": 1742480982771,
+        "key": "BUCKET_OF_DYE.++",
+        "unitprice": 1299999.0
+    },
+    {
+        "timestamp": 1742480983306,
+        "key": "SILVER_FANG.++",
+        "unitprice": 30833.25
+    },
+    {
+        "timestamp": 1742480984319,
+        "key": "ATTRIBUTE_SHARD.+++mana_regeneration=2",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742480984692,
+        "key": "WATER_HYDRA_HEAD.++",
+        "unitprice": 2000000.0
+    },
+    {
+        "timestamp": 1742480985083,
+        "key": "GEMSTONE_FUEL_TANK.++",
+        "unitprice": 49999999.0
+    },
+    {
+        "timestamp": 1742480985122,
+        "key": "GOD_POTION_2.++",
+        "unitprice": 2300000.0
+    },
+    {
+        "timestamp": 1742480985673,
+        "key": "COMMON_HOOK.++",
+        "unitprice": 90000.0
+    },
+    {
+        "timestamp": 1742480985861,
+        "key": "RAIDER_AXE.++",
         "unitprice": 200000.0
     },
     {
-        "timestamp": 1742380232558,
-        "key": "LARGE_BACKPACK.+EPIC+",
-        "unitprice": 399999.0
+        "timestamp": 1742480985946,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
     },
     {
-        "timestamp": 1742380233613,
-        "key": "SNIPER_HELMET.+RARE+",
-        "unitprice": 189999.0
+        "timestamp": 1742480986563,
+        "key": "LEGEND_ROD.++",
+        "unitprice": 1119999.0
     },
     {
-        "timestamp": 1742380233624,
-        "key": "GLACITE_HELMET.+EPIC+",
-        "unitprice": 15000.0
+        "timestamp": 1742480986652,
+        "key": "ASPECT_OF_THE_VOID.++",
+        "unitprice": 4900000.0
+    },
+    {
+        "timestamp": 1742480986723,
+        "key": "ATTRIBUTE_SHARD.+++dominance=4",
+        "unitprice": 5450000.0
+    },
+    {
+        "timestamp": 1742480986914,
+        "key": "MOBY_DUCK.++",
+        "unitprice": 2700000.0
+    },
+    {
+        "timestamp": 1742480988088,
+        "key": "PET.++",
+        "unitprice": 71000000.0
+    },
+    {
+        "timestamp": 1742480988140,
+        "key": "CRYPT_DREADLORD_SWORD.++",
+        "unitprice": 90000.0
+    },
+    {
+        "timestamp": 1742480989085,
+        "key": "ZOMBIE_KNIGHT_CHESTPLATE.++Fierce",
+        "unitprice": 98000.0
+    },
+    {
+        "timestamp": 1742480989724,
+        "key": "MOLTEN_CLOAK.+++rarity_upgrade+mending=5,lifeline=4",
+        "unitprice": 17000000.0
+    },
+    {
+        "timestamp": 1742480990057,
+        "key": "GRAVITY_TALISMAN.++",
+        "unitprice": 40000.0
+    },
+    {
+        "timestamp": 1742480990590,
+        "key": "WATER_HYDRA_HEAD.++",
+        "unitprice": 2000000.0
+    },
+    {
+        "timestamp": 1742480991619,
+        "key": "ATTRIBUTE_SHARD.+++dominance=4",
+        "unitprice": 5500000.0
+    },
+    {
+        "timestamp": 1742480991743,
+        "key": "PET.++",
+        "unitprice": 2000000.0
+    },
+    {
+        "timestamp": 1742480991785,
+        "key": "SKELETON_GRUNT_HELMET.+++color=14805812",
+        "unitprice": 87000.0
+    },
+    {
+        "timestamp": 1742480992154,
+        "key": "GLOSSY_MINERAL_HELMET.ultimate_wisdom=5+++rarity_upgrade",
+        "unitprice": 72000000.0
+    },
+    {
+        "timestamp": 1742480992337,
+        "key": "EARTH_SHARD.++",
+        "unitprice": 40000.0
+    },
+    {
+        "timestamp": 1742480993522,
+        "key": "REFINED_TITANIUM_PICKAXE.++",
+        "unitprice": 1999999.0
+    },
+    {
+        "timestamp": 1742480993793,
+        "key": "WAND_OF_MENDING.++",
+        "unitprice": 300000.0
+    },
+    {
+        "timestamp": 1742480993986,
+        "key": "MITHRIL_DRILL_ENGINE.++",
+        "unitprice": 17170000.0
+    },
+    {
+        "timestamp": 1742480994434,
+        "key": "LEGEND_ROD.++",
+        "unitprice": 1119999.0
+    },
+    {
+        "timestamp": 1742480995364,
+        "key": "PET_ITEM_TITANIUM_MINECART.++",
+        "unitprice": 1000.0
+    },
+    {
+        "timestamp": 1742480995381,
+        "key": "WISE_WITHER_LEGGINGS.ultimate_wisdom=5++Necrotic+rarity_upgrade+color=1550532",
+        "unitprice": 46100000.0
+    },
+    {
+        "timestamp": 1742480995586,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742480996144,
+        "key": "ATTRIBUTE_SHARD.+++mana_regeneration=2",
+        "unitprice": 1190000.0
+    },
+    {
+        "timestamp": 1742480996523,
+        "key": "ATTRIBUTE_SHARD.+++blazing_fortune=1",
+        "unitprice": 1100000.0
+    },
+    {
+        "timestamp": 1742480996878,
+        "key": "SILVER_FANG.++",
+        "unitprice": 15625.0
+    },
+    {
+        "timestamp": 1742480996935,
+        "key": "MOLTEN_BELT.+++mana_regeneration=3,experience=3",
+        "unitprice": 690000.0
+    },
+    {
+        "timestamp": 1742480996940,
+        "key": "BOUQUET_OF_LIES.++",
+        "unitprice": 12000000.0
+    },
+    {
+        "timestamp": 1742480997611,
+        "key": "PET.++",
+        "unitprice": 50000.0
+    },
+    {
+        "timestamp": 1742480997787,
+        "key": "DIGESTED_MOSQUITO.++",
+        "unitprice": 288888.0
+    },
+    {
+        "timestamp": 1742480998100,
+        "key": "PET_ITEM_TEXTBOOK.++",
+        "unitprice": 1120000.0
+    },
+    {
+        "timestamp": 1742480998970,
+        "key": "SPIDER_QUEENS_STINGER.++",
+        "unitprice": 200000.0
+    },
+    {
+        "timestamp": 1742480999559,
+        "key": "WATER_HYDRA_HEAD.++",
+        "unitprice": 2200000.0
+    },
+    {
+        "timestamp": 1742480999628,
+        "key": "ZOMBIE_KNIGHT_SWORD.++",
+        "unitprice": 31000.0
+    },
+    {
+        "timestamp": 1742480999682,
+        "key": "MOLTEN_BELT.+++rarity_upgrade+mending=5,dominance=5",
+        "unitprice": 16200000.0
+    },
+    {
+        "timestamp": 1742480999838,
+        "key": "PET.++",
+        "unitprice": 15900000.0
+    },
+    {
+        "timestamp": 1742481001032,
+        "key": "THUNDER_IN_A_BOTTLE_EMPTY.++",
+        "unitprice": 239000.0
+    },
+    {
+        "timestamp": 1742481001072,
+        "key": "LEGEND_ROD.++",
+        "unitprice": 1129999.0
+    },
+    {
+        "timestamp": 1742481001076,
+        "key": "PET_ITEM_EXP_SHARE.++",
+        "unitprice": 8888000.0
+    },
+    {
+        "timestamp": 1742481001237,
+        "key": "WOOD_TALISMAN.++",
+        "unitprice": 44000.0
+    },
+    {
+        "timestamp": 1742481001932,
+        "key": "JUNGLE_AMULET.++",
+        "unitprice": 1550000.0
+    },
+    {
+        "timestamp": 1742481001969,
+        "key": "WISE_WITHER_HELMET.++",
+        "unitprice": 9600000.0
+    },
+    {
+        "timestamp": 1742481002437,
+        "key": "PHANTOM_HOOK.++",
+        "unitprice": 2700000.0
+    },
+    {
+        "timestamp": 1742481002608,
+        "key": "GOD_POTION_2.++",
+        "unitprice": 2300000.0
+    },
+    {
+        "timestamp": 1742481002920,
+        "key": "DIGESTED_MOSQUITO.++",
+        "unitprice": 288889.0
+    },
+    {
+        "timestamp": 1742481003154,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742481004248,
+        "key": "ATTRIBUTE_SHARD.+++mana_regeneration=3",
+        "unitprice": 1183999.0
+    },
+    {
+        "timestamp": 1742481004856,
+        "key": "MITHRIL_COAT.++",
+        "unitprice": 99990.0
+    },
+    {
+        "timestamp": 1742481005030,
+        "key": "SKELETON_GRUNT_CHESTPLATE.++Fierce+color=14805812",
+        "unitprice": 38000.0
+    },
+    {
+        "timestamp": 1742481005105,
+        "key": "SOUL_ESOWARD.++",
+        "unitprice": 5000000.0
+    },
+    {
+        "timestamp": 1742481005269,
+        "key": "MAGMA_LORD_HELMET.+++rarity_upgrade+life_regeneration=1,arachno_resistance=1",
+        "unitprice": 30000000.0
+    },
+    {
+        "timestamp": 1742481005540,
+        "key": "WISE_DRAGON_HELMET.++Wise",
+        "unitprice": 750000.0
+    },
+    {
+        "timestamp": 1742481006076,
+        "key": "SCARF_STUDIES.++",
+        "unitprice": 1600000.0
+    },
+    {
+        "timestamp": 1742481006926,
+        "key": "FLOWER_OF_TRUTH.++",
+        "unitprice": 4000000.0
+    },
+    {
+        "timestamp": 1742481007315,
+        "key": "MERCENARY_AXE.++",
+        "unitprice": 99000.0
+    },
+    {
+        "timestamp": 1742481007422,
+        "key": "GLOSSY_MINERAL_LEGGINGS.ultimate_wisdom=5+++rarity_upgrade+color=5967278",
+        "unitprice": 72000000.0
+    },
+    {
+        "timestamp": 1742481007856,
+        "key": "PET_ITEM_MINING_SKILL_BOOST_RARE.++",
+        "unitprice": 111111.0
+    },
+    {
+        "timestamp": 1742481008262,
+        "key": "DIVAN_HELMET.+++rarity_upgrade",
+        "unitprice": 50000000.0
+    },
+    {
+        "timestamp": 1742481008357,
+        "key": "WOOD_TALISMAN.++",
+        "unitprice": 44000.0
+    },
+    {
+        "timestamp": 1742481008491,
+        "key": "OXFORD_SHOES.+++color=13584744",
+        "unitprice": 380000.0
+    },
+    {
+        "timestamp": 1742481009016,
+        "key": "SPEEDY_LINE.++",
+        "unitprice": 2600000.0
+    },
+    {
+        "timestamp": 1742481009181,
+        "key": "SCARF_STUDIES.++",
+        "unitprice": 1600000.0
+    },
+    {
+        "timestamp": 1742481009260,
+        "key": "SKELETON_GRUNT_HELMET.+++color=14805812",
+        "unitprice": 75000.0
+    },
+    {
+        "timestamp": 1742481009376,
+        "key": "POTION.++",
+        "unitprice": 50000.0
+    },
+    {
+        "timestamp": 1742481009409,
+        "key": "POCKET_ESPRESSO_MACHINE.++",
+        "unitprice": 119000.0
+    },
+    {
+        "timestamp": 1742481009611,
+        "key": "FUNGI_CUTTER.++",
+        "unitprice": 2000000.0
+    },
+    {
+        "timestamp": 1742481009632,
+        "key": "BIOFUEL.++",
+        "unitprice": 20000.0
+    },
+    {
+        "timestamp": 1742481010753,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742481011190,
+        "key": "CRYSTALLIZED_HEART.++",
+        "unitprice": 900000.0
+    },
+    {
+        "timestamp": 1742481011488,
+        "key": "PET.++",
+        "unitprice": 8500000.0
+    },
+    {
+        "timestamp": 1742481011507,
+        "key": "MAGMA_LORD_BOOTS.ultimate_legion=5+++rarity_upgrade+color=7278344+mana_regeneration=6,speed=6",
+        "unitprice": 72500000.0
+    },
+    {
+        "timestamp": 1742481012923,
+        "key": "ANTIQUE_REMEDIES.++",
+        "unitprice": 99000.0
+    },
+    {
+        "timestamp": 1742481012922,
+        "key": "SKELETON_GRUNT_BOOTS.++Wise+color=14805812",
+        "unitprice": 76000.0
+    },
+    {
+        "timestamp": 1742481013048,
+        "key": "SCARF_STUDIES.++",
+        "unitprice": 1600000.0
+    },
+    {
+        "timestamp": 1742481013140,
+        "key": "GOD_POTION_2.++",
+        "unitprice": 2299000.0
+    },
+    {
+        "timestamp": 1742481013478,
+        "key": "MITHRIL_COAT.++",
+        "unitprice": 99999.0
+    },
+    {
+        "timestamp": 1742481014045,
+        "key": "ATTRIBUTE_SHARD.+++mana_pool=3",
+        "unitprice": 6000000.0
+    },
+    {
+        "timestamp": 1742481014507,
+        "key": "NETHERRACK_LOOKING_SUNSHADE.++",
+        "unitprice": 50000.0
+    },
+    {
+        "timestamp": 1742481014816,
+        "key": "ATTRIBUTE_SHARD.+++mana_regeneration=3",
+        "unitprice": 1400000.0
+    },
+    {
+        "timestamp": 1742481015258,
+        "key": "JUNGLE_PICKAXE.++",
+        "unitprice": 685000.0
+    },
+    {
+        "timestamp": 1742481015280,
+        "key": "SPEEDY_LINE.++",
+        "unitprice": 2600000.0
+    },
+    {
+        "timestamp": 1742481015543,
+        "key": "GOLEM_ARMOR_BOOTS.++",
+        "unitprice": 199000.0
+    },
+    {
+        "timestamp": 1742481016859,
+        "key": "PET.++",
+        "unitprice": 7000000.0
+    },
+    {
+        "timestamp": 1742481017236,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742481017479,
+        "key": "ZOMBIE_KNIGHT_BOOTS.++",
+        "unitprice": 70000.0
+    },
+    {
+        "timestamp": 1742481017627,
+        "key": "SKELETON_MASTER_HELMET.+++rarity_upgrade+color=16739083",
+        "unitprice": 100000.0
+    },
+    {
+        "timestamp": 1742481017805,
+        "key": "ATTRIBUTE_SHARD.+++blazing_fortune=1",
+        "unitprice": 1200000.0
+    },
+    {
+        "timestamp": 1742481018264,
+        "key": "ATTRIBUTE_SHARD.+++mana_pool=3",
+        "unitprice": 6000000.0
+    },
+    {
+        "timestamp": 1742481018905,
+        "key": "SILVER_FANG.++",
+        "unitprice": 30833.25
+    },
+    {
+        "timestamp": 1742481019075,
+        "key": "GLOSSY_MINERAL_BOOTS.ultimate_wisdom=5+++rarity_upgrade+color=5967278",
+        "unitprice": 72000000.0
+    },
+    {
+        "timestamp": 1742481019173,
+        "key": "CROPIE_TALISMAN.++",
+        "unitprice": 6399999.0
+    },
+    {
+        "timestamp": 1742481019307,
+        "key": "RAIDER_AXE.++",
+        "unitprice": 190000.0
+    },
+    {
+        "timestamp": 1742481019828,
+        "key": "SCARF_STUDIES.++",
+        "unitprice": 1650000.0
+    },
+    {
+        "timestamp": 1742481019953,
+        "key": "WISE_DRAGON_CHESTPLATE.++Wise+color=2748649",
+        "unitprice": 1400000.0
+    },
+    {
+        "timestamp": 1742481020032,
+        "key": "SPEEDY_LINE.++",
+        "unitprice": 2600000.0
+    },
+    {
+        "timestamp": 1742481020130,
+        "key": "ZOMBIE_KNIGHT_HELMET.++",
+        "unitprice": 75000.0
+    },
+    {
+        "timestamp": 1742481020186,
+        "key": "SPEEDY_LINE.++",
+        "unitprice": 2600000.0
+    },
+    {
+        "timestamp": 1742481020188,
+        "key": "GREAT_SPOOK_SWORD.++",
+        "unitprice": 4300000.0
+    },
+    {
+        "timestamp": 1742481021072,
+        "key": "GOLEM_ARMOR_HELMET.++",
+        "unitprice": 199000.0
+    },
+    {
+        "timestamp": 1742481021697,
+        "key": "DIVAN_HELMET.+++rarity_upgrade",
+        "unitprice": 64000000.0
+    },
+    {
+        "timestamp": 1742481022888,
+        "key": "ATTRIBUTE_SHARD.+++mana_pool=2",
+        "unitprice": 2799999.0
+    },
+    {
+        "timestamp": 1742481023080,
+        "key": "ZOMBIE_KNIGHT_LEGGINGS.++",
+        "unitprice": 77000.0
+    },
+    {
+        "timestamp": 1742481023174,
+        "key": "SKELETON_GRUNT_CHESTPLATE.+++color=14805812",
+        "unitprice": 750000.0
+    },
+    {
+        "timestamp": 1742481023202,
+        "key": "DYE_CHOCOLATE.++",
+        "unitprice": 899000.0
+    },
+    {
+        "timestamp": 1742481023592,
+        "key": "CONJURING_SWORD.++Gentle",
+        "unitprice": 47000.0
+    },
+    {
+        "timestamp": 1742481023902,
+        "key": "LUSH_TALISMAN.++",
+        "unitprice": 199000.0
+    },
+    {
+        "timestamp": 1742481025381,
+        "key": "LARGE_BACKPACK.++",
+        "unitprice": 439000.0
+    },
+    {
+        "timestamp": 1742481025411,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742481025785,
+        "key": "SPIDER_TALISMAN.++",
+        "unitprice": 54999.0
+    },
+    {
+        "timestamp": 1742481026102,
+        "key": "THUNDER_IN_A_BOTTLE.++",
+        "unitprice": 2589999.0
+    },
+    {
+        "timestamp": 1742481026147,
+        "key": "JUMBO_BACKPACK.++",
+        "unitprice": 7000000.0
+    },
+    {
+        "timestamp": 1742481026608,
+        "key": "GOLEM_ARMOR_LEGGINGS.++",
+        "unitprice": 285000.0
+    },
+    {
+        "timestamp": 1742481027063,
+        "key": "ZOMBIE_KNIGHT_CHESTPLATE.++",
+        "unitprice": 97000.0
+    },
+    {
+        "timestamp": 1742481027282,
+        "key": "LIVID_DAGGER.ultimate_wise=5++Fabled",
+        "unitprice": 9000000.0
+    },
+    {
+        "timestamp": 1742481027383,
+        "key": "JUNK_ARTIFACT.++",
+        "unitprice": 5700000.0
+    },
+    {
+        "timestamp": 1742481027488,
+        "key": "MITHRIL_PICKAXE.++",
+        "unitprice": 998999.0
+    },
+    {
+        "timestamp": 1742481027603,
+        "key": "ICY_SINKER.++",
+        "unitprice": 90000.0
+    },
+    {
+        "timestamp": 1742481027785,
+        "key": "PET.++",
+        "unitprice": 6500000.0
+    },
+    {
+        "timestamp": 1742481027999,
+        "key": "ATTRIBUTE_SHARD.+++mana_pool=2",
+        "unitprice": 3200000.0
+    },
+    {
+        "timestamp": 1742481028515,
+        "key": "WISE_WITHER_BOOTS.ultimate_wisdom=5++Necrotic+rarity_upgrade+color=1889508",
+        "unitprice": 42999999.0
+    },
+    {
+        "timestamp": 1742481028856,
+        "key": "TERMINATOR.+++rarity_upgrade",
+        "unitprice": 680000000.0
+    },
+    {
+        "timestamp": 1742481029894,
+        "key": "KAT_FLOWER.++",
+        "unitprice": 700000.0
+    },
+    {
+        "timestamp": 1742481030229,
+        "key": "BEACON.++",
+        "unitprice": 2500000.0
+    },
+    {
+        "timestamp": 1742481030621,
+        "key": "JUNK_SINKER.++",
+        "unitprice": 100000.0
+    },
+    {
+        "timestamp": 1742481030992,
+        "key": "GOLEM_ARMOR_CHESTPLATE.++",
+        "unitprice": 295000.0
+    },
+    {
+        "timestamp": 1742481031365,
+        "key": "ASPECT_OF_THE_END.++",
+        "unitprice": 930000.0
+    },
+    {
+        "timestamp": 1742481031550,
+        "key": "PET.++",
+        "unitprice": 3200000.0
+    },
+    {
+        "timestamp": 1742481031567,
+        "key": "STRONG_DRAGON_LEGGINGS.++Strong+color=14717977",
+        "unitprice": 2890000.0
+    },
+    {
+        "timestamp": 1742481031975,
+        "key": "GOD_POTION_2.++",
+        "unitprice": 2299000.0
+    },
+    {
+        "timestamp": 1742481032764,
+        "key": "ATTRIBUTE_SHARD.+++blazing_fortune=1",
+        "unitprice": 1200000.0
+    },
+    {
+        "timestamp": 1742481033044,
+        "key": "SKELETON_MASTER_BOOTS.+++rarity_upgrade+color=16739083",
+        "unitprice": 600000.0
+    },
+    {
+        "timestamp": 1742481033150,
+        "key": "ATTRIBUTE_SHARD.+++magic_find=4",
+        "unitprice": 6200000.0
     }
 ]
