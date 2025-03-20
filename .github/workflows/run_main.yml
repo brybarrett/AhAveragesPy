@@ -2,7 +2,7 @@ name: Run Main Script
 
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/5 * * * *" # Workflows can only run a minimum of every 5 minutes, however even so, usually run about every 5-15 mins even when at 5.
   workflow_dispatch:
 
 jobs:
