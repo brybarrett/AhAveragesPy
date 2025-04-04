@@ -60,6 +60,48 @@
 
                 // Get the table names from the database.
                 let res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+
+                // Initialize records-per-page controls and pagination variables
+                let recordsPerPage = 25;
+                let currentPage = 1;
+                const recordsSelectHTML = `
+                    <label for="recordsPerPageSelect" style="margin-left: 20px;">Records per page:</label>
+                    <select id="recordsPerPageSelect">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="300">300</option>
+                        <option value="500">500</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                    <input type="number" id="customPerPage" placeholder="Custom number" style="display:none; margin-left:5px; width:100px;" />
+                `;
+                document.getElementById('controls').insertAdjacentHTML('beforeend', recordsSelectHTML);
+
+                const recordsPerPageSelect = document.getElementById('recordsPerPageSelect');
+                const customPerPageInput = document.getElementById('customPerPage');
+
+                recordsPerPageSelect.addEventListener('change', function() {
+                    if (this.value === "custom") {
+                        customPerPageInput.style.display = "inline-block";
+                        let customVal = parseInt(customPerPageInput.value) || 25;
+                        recordsPerPage = customVal;
+                    } else {
+                        customPerPageInput.style.display = "none";
+                        recordsPerPage = parseInt(this.value);
+                    }
+                    currentPage = 1;
+                    displayTable(currentTableName, document.getElementById('searchInput').value);
+                });
+
+                customPerPageInput.addEventListener('input', function() {
+                    let val = parseInt(this.value);
+                    if (!isNaN(val) && val > 0) {
+                        recordsPerPage = val;
+                        currentPage = 1;
+                        displayTable(currentTableName, document.getElementById('searchInput').value);
+                    }
+                });
                 let tableNames = (res[0] && res[0].values.map(row => row[0])) || [];
                 const tableSelect = document.getElementById('tableSelect');
                 tableSelect.innerHTML = "";
