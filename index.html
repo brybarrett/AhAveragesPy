@@ -178,7 +178,7 @@
 
                     // Update entries count
                     let entriesCountElement = document.getElementById('entriesCount');
-                    entriesCountElement.textContent = `Entries in current table: ${totalRecords}`;
+                    entriesCountElement.textContent = `Entries in current table: ${totalRecords.toLocaleString()}`;
 
                     let paginationControls = document.createElement('div');
                     paginationControls.style.marginTop = '10px';
