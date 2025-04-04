@@ -28,6 +28,7 @@
     </head>
     <body>
         <h1>Database Viewer</h1>
+        <p id="entriesCount">Entries in current table: 0</p>
         <div id="controls">
             <label for="tableSelect">Select Table:</label>
             <select id="tableSelect">
@@ -118,17 +119,23 @@
 
                 let currentTableName = tableNames[0];
 
-                // Function to display table contents with optional search filtering.
+                // Function to display table contents with optional search filtering and pagination.
                 function displayTable(tableName, searchQuery = "") {
-                    let result = db.exec(`SELECT * FROM "${tableName}";`);
+                    let offset = (currentPage - 1) * recordsPerPage;
+                    let query = `SELECT * FROM "${tableName}" LIMIT ${recordsPerPage} OFFSET ${offset};`;
+                    let result = db.exec(query);
+
                     let container = document.getElementById('tableContainer');
                     container.innerHTML = "";
+
                     if (!result[0]) {
                         container.innerHTML = `<p>No data available in table "${tableName}"</p>`;
                         return;
                     }
+
                     let { columns, values } = result[0];
                     let filteredRows = values;
+
                     if (searchQuery.trim() !== "") {
                         const lowerQuery = searchQuery.toLowerCase();
                         filteredRows = values.filter(row => 
@@ -136,7 +143,7 @@
                         );
                     }
 
-                    if(filteredRows.length === 0) {
+                    if (filteredRows.length === 0) {
                         container.innerHTML = `<p>No matching records found in table "${tableName}"</p>`;
                         return;
                     }
@@ -164,6 +171,40 @@
                     });
                     table.appendChild(tbody);
                     container.appendChild(table);
+
+                    // Add pagination controls
+                    let totalRecords = db.exec(`SELECT COUNT(*) as count FROM "${tableName}";`)[0].values[0][0];
+                    let totalPages = Math.ceil(totalRecords / recordsPerPage);
+
+                    // Update entries count
+                    let entriesCountElement = document.getElementById('entriesCount');
+                    entriesCountElement.textContent = `Entries in current table: ${totalRecords}`;
+
+                    let paginationControls = document.createElement('div');
+                    paginationControls.style.marginTop = '10px';
+
+                    if (currentPage > 1) {
+                        let prevButton = document.createElement('button');
+                        prevButton.textContent = 'Previous';
+                        prevButton.addEventListener('click', () => {
+                            currentPage--;
+                            displayTable(tableName, searchQuery);
+                        });
+                        paginationControls.appendChild(prevButton);
+                    }
+
+                    if (currentPage < totalPages) {
+                        let nextButton = document.createElement('button');
+                        nextButton.textContent = 'Next';
+                        nextButton.style.marginLeft = '10px';
+                        nextButton.addEventListener('click', () => {
+                            currentPage++;
+                            displayTable(tableName, searchQuery);
+                        });
+                        paginationControls.appendChild(nextButton);
+                    }
+
+                    container.appendChild(paginationControls);
                 }
 
                 // Display the first table by default.
