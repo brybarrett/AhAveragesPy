@@ -50,45 +50,17 @@
                 // Initialize SQL.js.
                 const SQL = await initSqlJs(config);
 
-                // Fetch the database files as ArrayBuffers.
-                let dbFiles = ['database.db', 'database2.db'];
-                let databases = {};
-
-                for (let dbFile of dbFiles) {
-                    try {
-                        let response = await fetch(dbFile);
-                        if (!response.ok) {
-                            console.warn(`Error loading ${dbFile}`);
-                            continue;
-                        }
-                        let buffer = await response.arrayBuffer();
-                        databases[dbFile] = new SQL.Database(new Uint8Array(buffer));
-                    } catch (error) {
-                        console.error(`Failed to load ${dbFile}:`, error);
-                    }
-                }
-
-                // Populate the database selection dropdown.
-                const tableSelect = document.getElementById('tableSelect');
-                tableSelect.innerHTML = "";
-                for (let [dbName, db] of Object.entries(databases)) {
-                    let res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
-                    let tableNames = (res[0] && res[0].values.map(row => row[0])) || [];
-                    tableNames.forEach(name => {
-                        let option = document.createElement('option');
-                        option.value = `${dbName}:${name}`;
-                        option.textContent = `${dbName} - ${name}`;
-                        tableSelect.appendChild(option);
-                    });
-                }
-
-                if (Object.keys(databases).length === 0) {
-                    tableSelect.innerHTML = '<option disabled>No databases loaded</option>';
+                // Fetch the database file as an ArrayBuffer.
+                let response = await fetch('database.db');
+                if (!response.ok) {
+                    document.body.innerHTML = '<h2>Error loading database.db</h2>';
                     return;
                 }
+                let buffer = await response.arrayBuffer();
+                let db = new SQL.Database(new Uint8Array(buffer));
 
-                let currentDbName = Object.keys(databases)[0];
-                let currentTableName = Object.values(databases)[0].exec("SELECT name FROM sqlite_master WHERE type='table';")[0].values[0][0];
+                // Get the table names from the database.
+                let res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
 
                 // Initialize records-per-page controls and pagination variables
                 let recordsPerPage = 25;
@@ -120,7 +92,7 @@
                         recordsPerPage = parseInt(this.value);
                     }
                     currentPage = 1;
-                    displayTable(currentDbName, currentTableName, document.getElementById('searchInput').value);
+                    displayTable(currentTableName, document.getElementById('searchInput').value);
                 });
 
                 customPerPageInput.addEventListener('input', function() {
@@ -128,13 +100,27 @@
                     if (!isNaN(val) && val > 0) {
                         recordsPerPage = val;
                         currentPage = 1;
-                        displayTable(currentDbName, currentTableName, document.getElementById('searchInput').value);
+                        displayTable(currentTableName, document.getElementById('searchInput').value);
                     }
                 });
+                let tableNames = (res[0] && res[0].values.map(row => row[0])) || [];
+                const tableSelect = document.getElementById('tableSelect');
+                tableSelect.innerHTML = "";
+                if (tableNames.length === 0) {
+                    tableSelect.innerHTML = '<option disabled>No tables found</option>';
+                    return;
+                }
+                tableNames.forEach(name => {
+                    let option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    tableSelect.appendChild(option);
+                });
+
+                let currentTableName = tableNames[0];
 
                 // Function to display table contents with optional search filtering and pagination.
-                function displayTable(dbName, tableName, searchQuery = "") {
-                    let db = databases[dbName];
+                function displayTable(tableName, searchQuery = "") {
                     let offset = (currentPage - 1) * recordsPerPage;
                     let query = `SELECT * FROM "${tableName}" LIMIT ${recordsPerPage} OFFSET ${offset};`;
                     let result = db.exec(query);
@@ -202,7 +188,7 @@
                         prevButton.textContent = 'Previous';
                         prevButton.addEventListener('click', () => {
                             currentPage--;
-                            displayTable(dbName, tableName, searchQuery);
+                            displayTable(tableName, searchQuery);
                         });
                         paginationControls.appendChild(prevButton);
                     }
@@ -213,7 +199,7 @@
                         nextButton.style.marginLeft = '10px';
                         nextButton.addEventListener('click', () => {
                             currentPage++;
-                            displayTable(dbName, tableName, searchQuery);
+                            displayTable(tableName, searchQuery);
                         });
                         paginationControls.appendChild(nextButton);
                     }
@@ -222,21 +208,19 @@
                 }
 
                 // Display the first table by default.
-                displayTable(currentDbName, currentTableName);
+                displayTable(currentTableName);
 
                 // When table is changed, clear search and display new table.
                 tableSelect.addEventListener('change', function() {
-                    let [dbName, tableName] = this.value.split(':');
-                    currentDbName = dbName;
-                    currentTableName = tableName;
+                    currentTableName = this.value;
                     document.getElementById('searchInput').value = "";
-                    displayTable(currentDbName, currentTableName);
+                    displayTable(currentTableName);
                 });
 
                 // Live search as the user types.
                 const searchInput = document.getElementById('searchInput');
                 searchInput.addEventListener('input', function() {
-                    displayTable(currentDbName, currentTableName, this.value);
+                    displayTable(currentTableName, this.value);
                 });
             })();
         </script>
