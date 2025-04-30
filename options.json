@@ -15,9 +15,18 @@
         "ultimate_flowstate": [1,2,3,4,5]
     },
 
+    "tier_6_enchants": {
+        "protection": [6],
+        "growth": [6]
+    },
+    "tier_7_enchants": {
+        "protection": [7],
+        "growth": [7],
+        "giant_killer": [7]
+    },
+
     "regular_relevant_enchants": {
-            "efficiency": [10],
-            "giant_killer": [7]
+            "efficiency": [10]
     },
 
     "rarities":[
