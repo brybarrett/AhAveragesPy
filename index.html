@@ -55,13 +55,17 @@
                 let databases = {};
 
                 for (let dbFile of dbFiles) {
-                    let response = await fetch(dbFile);
-                    if (!response.ok) {
-                        console.warn(`Error loading ${dbFile}`);
-                        continue;
+                    try {
+                        let response = await fetch(dbFile);
+                        if (!response.ok) {
+                            console.warn(`Error loading ${dbFile}`);
+                            continue;
+                        }
+                        let buffer = await response.arrayBuffer();
+                        databases[dbFile] = new SQL.Database(new Uint8Array(buffer));
+                    } catch (error) {
+                        console.error(`Failed to load ${dbFile}:`, error);
                     }
-                    let buffer = await response.arrayBuffer();
-                    databases[dbFile] = new SQL.Database(new Uint8Array(buffer));
                 }
 
                 // Populate the database selection dropdown.
@@ -76,6 +80,11 @@
                         option.textContent = `${dbName} - ${name}`;
                         tableSelect.appendChild(option);
                     });
+                }
+
+                if (Object.keys(databases).length === 0) {
+                    tableSelect.innerHTML = '<option disabled>No databases loaded</option>';
+                    return;
                 }
 
                 let currentDbName = Object.keys(databases)[0];
