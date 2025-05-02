@@ -52,7 +52,7 @@ def main():
         with open('auctions.json', 'w') as f:
             json.dump(auctions, f, indent=4)
     except Exception as e:
-        print("Error: Failed to write auctions.json", e)
+        print("Error: Failed to write auctions.json: ", e)
 
     auctions = [{**x, 'detail': x['detail']['i'][0]} for x in auctions]
 
@@ -65,6 +65,8 @@ def main():
         'recomb': x['detail']['tag']['ExtraAttributes'].get('rarity_upgrades'),
         'color': str(x['detail']['tag']['display'].get('color')) if x['detail']['tag']['display'].get('color') is not None else None,
         'attributes': x['detail']['tag']['ExtraAttributes'].get('attributes'),
+        'gems': ({k: v['quality'] for k, v in x['detail']['tag']['ExtraAttributes'].get('gems', {}).items() if k != 'unlocked_slots' and isinstance(v, dict)}
+                 if x['detail']['tag']['ExtraAttributes'].get('gems') and any(k != 'unlocked_slots' and isinstance(v, dict) and 'quality' in v for k, v in x['detail']['tag']['ExtraAttributes']['gems'].items()) else None),
         'lore': [l.replace('§.', '') for l in x['detail']['tag']['display'].get('Lore', [])],
         'name': x['detail']['tag']['display'].get('Name'),
         'id': x['detail']['tag']['ExtraAttributes'].get('id')
