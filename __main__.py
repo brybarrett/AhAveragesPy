@@ -51,69 +51,12 @@ def decode_item_bytes(b, context=None):
         return None
 
 def main():
-    # Build processed auctions with extracted fields, keeping raw bytes & full NBT
-    processed = []
-    for x in auctions:
-        try:
-            detail = x['detail']
-            ea = detail['tag']['ExtraAttributes']
-            display = detail['tag'].get('display', {})
-            record = {
-                'timestamp': x['timestamp'],
-                'price': x['price'],
-                'unitprice': x['price'] / detail['Count'] if detail.get('Count') else None,
-                'count': detail.get('Count'),
-                'ench1': detail['tag'].get('ench'),
-                'ench2': ea.get('enchantments'),
-                'recomb': ea.get('rarity_upgrades'),
-                'color': str(display.get('color')) if display.get('color') is not None else None,
-                'attributes': ea.get('attributes'),
-                'gems': ({k: v['quality'] for k, v in ea.get('gems', {}).items() if k != 'unlocked_slots' and isinstance(v, dict)}
-                         if ea.get('gems') and any(k != 'unlocked_slots' and isinstance(v, dict) and 'quality' in v for k, v in ea.get('gems', {}).items()) else None),
-                'lore': [l.replace('§.', '') for l in display.get('Lore', [])],
-                'name': display.get('Name'),
-                'id': ea.get('id'),
-                'item_bytes': x.get('item_bytes'),
-                'full_nbt': detail
-            }
-            processed.append(record)
-        except Exception as e:
-            log_decode_error({'stage': 'build_processed_record'}, e)
-    auctions = processed
-
-    # Construct concatenated key (legacy composite key) and also keep base id as base_key
-    for x in auctions:
-        parts = []
-        # enchants
-        if x.get('ench2'):
-            ench_part = ','.join([
-                f"{e}={x['ench2'][e]}" for e in options.get('relevant_enchants', {})
-                if e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
-            ])
-            if ench_part:
-                parts.append(ench_part)
-        # rarities in lore
-        lore_rarities = [r for r in options.get('rarities', []) if r in x.get('lore', [])]
-        if lore_rarities:
-            parts.append(','.join(lore_rarities))
-        # reforges in name
-        reforges_present = [r for r in options.get('reforges', []) if r and x.get('name') and r in x['name']]
-        if reforges_present:
-            parts.append(','.join(reforges_present))
-        if x.get('recomb'):
-            parts.append('rarity_upgrade')
-        if x.get('color') is not None:
-            parts.append(f"color={x['color']}")
-        if x.get('attributes'):
-            attr_part = ','.join([f"{a}={x['attributes'][a]}" for a in x['attributes']])
-            if attr_part:
-                parts.append(attr_part)
-        composite_key = x.get('id', 'UNKNOWN') + '.' + '+'.join(parts)
-        x['key'] = composite_key
-        x['base_key'] = x.get('id')
     print("Starting...")
+    # 1. Load config
     with open('options.json') as f:
         options = json.load(f)
+
+    # 2. Fetch auctions
     print("Getting auctions...")
     async def fetch_auctions():
         async with aiohttp.ClientSession() as session:
@@ -123,15 +66,14 @@ def main():
                 except Exception as e:
                     print("Error: Received invalid JSON", e)
                     return {}
-
     data0 = asyncio.run(fetch_auctions())
     print("Got auctions!")
-    # testing raw data written to a file
     with open('raw_auctions.json', 'w') as f:
         json.dump(data0, f, indent=4)
-    auctions = data0['auctions']
-    auctions = [x for x in auctions if x['bin'] and x['buyer']]
+    auctions = data0.get('auctions', [])
+    auctions = [x for x in auctions if x.get('bin') and x.get('buyer')]
 
+    # 3. Decode NBT
     decoded = []
     failures = 0
     for x in auctions:
@@ -144,7 +86,7 @@ def main():
         if detail is None:
             failures += 1
             continue
-        decoded.append({**x, 'detail': detail})
+        decoded.append({**x, 'detail': detail, 'full_nbt': detail})
     if failures:
         print(f"Warning: {failures} item(s) failed to decode (see {DECODE_ERROR_LOG}).")
     auctions = decoded
@@ -154,12 +96,12 @@ def main():
     except Exception as e:
         print("Error: Failed to write auctions.json: ", e)
 
-    # Filter out any entries where expected structure is missing
+    # 4. Extract detail.i[0]
     filtered = []
     missing_detail = 0
     for x in auctions:
         try:
-            filtered.append({**x, 'detail': x['detail']['i'][0]})
+            filtered.append({**x, 'detail': x['detail']['i'][0], 'full_nbt': x.get('full_nbt')})
         except Exception as e:
             missing_detail += 1
             log_decode_error({'stage': 'extract_i0', 'auction_id': x.get('auction_id') or x.get('uuid'), 'reason': 'detail.i[0] missing'}, e)
@@ -167,7 +109,7 @@ def main():
         print(f"Warning: {missing_detail} decoded item(s) lacked expected structure (logged).")
     auctions = filtered
 
-    # Build processed auctions with extracted fields, keep raw bytes & full nbt
+    # 5. Build processed list
     processed = []
     for x in auctions:
         try:
@@ -190,14 +132,14 @@ def main():
                 'name': display.get('Name'),
                 'id': ea.get('id'),
                 'item_bytes': x.get('item_bytes'),
-                'full_nbt': x.get('full_nbt')  # captured before detail extraction
+                'full_nbt': x.get('full_nbt')
             }
             processed.append(rec)
         except Exception as e:
             log_decode_error({'stage': 'process_record'}, e)
     auctions = processed
 
-    # Composite key + base key
+    # 6. Create composite + base keys
     for a in auctions:
         parts = []
         if a.get('ench2'):
@@ -224,28 +166,26 @@ def main():
         a['key'] = a.get('id', 'UNKNOWN') + '.' + '+'.join(parts)
         a['base_key'] = a.get('id')
 
-    # print(auctions)-
+    # 7. Dump processed JSON snapshots
     try:
         with open('auctions2.json', 'w') as f:
             json.dump(auctions, f, indent=4)
     except Exception as e:
         print("Error: Failed to write auctions2.json", e)
-
     auctions3 = [{k: x[k] for k in ('timestamp','key','unitprice')} for x in auctions]
     with open('auctions3.json', 'w') as f:
         json.dump(auctions3, f, indent=4)
 
+    # 8. Insert legacy DB
     sql = "INSERT INTO prices (timestamp, itemkey, price) VALUES (?, ?, ?)"
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS prices (timestamp INTEGER, itemkey TEXT, price REAL)")
     for auction in auctions3:
         cursor.execute(sql, (auction['timestamp'], auction['key'], auction['unitprice']))
-    conn.commit()
-    cursor.close()
-    conn.close()
+    conn.commit(); cursor.close(); conn.close()
 
-    # New detailed database V2
+    # 9. Insert new detailed DB
     conn2 = sqlite3.connect('database2.db')
     c2 = conn2.cursor()
     c2.execute("""
@@ -268,10 +208,8 @@ def main():
     c2.execute("CREATE TABLE IF NOT EXISTS item_rarities (price_id INTEGER, rarity TEXT)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_reforges (price_id INTEGER, reforge TEXT)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_gems (price_id INTEGER, gem TEXT, quality INTEGER)")
-    # Useful indexes
     c2.execute("CREATE INDEX IF NOT EXISTS idx_pricesV2_itemkey ON pricesV2(itemkey)")
     c2.execute("CREATE INDEX IF NOT EXISTS idx_pricesV2_timestamp ON pricesV2(timestamp)")
-
     for a in auctions:
         full_nbt_json = json.dumps(a.get('full_nbt'), ensure_ascii=False)
         c2.execute(
@@ -311,19 +249,13 @@ def main():
                         c2.execute("INSERT INTO item_reforges (price_id, reforge) VALUES (?, ?)", (price_id, reforge))
                     except Exception as e:
                         log_decode_error({'stage': 'insert_reforge', 'reforge': reforge, 'price_id': price_id}, e)
+    conn2.commit(); c2.close(); conn2.close()
 
-    conn2.commit()
-    c2.close()
-    conn2.close()
-
-def get_prices():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT timestamp, itemkey, COUNT(DISTINCT timestamp) volume, ROUND(AVG(price), 2) averageprice FROM prices GROUP BY itemkey HAVING volume > 20")
-    rows = cursor.fetchall()
-    conn.close()
-    return json.dumps({'numAverages': len(rows), 'averages': rows})
+    print(f"Completed processing {len(auctions)} auctions (V2 records inserted).")
 
 if __name__ == "__main__":
-    main()
-    print("Done! (decode errors, if any, recorded in decode_errors.log)")
+    try:
+        main()
+        print("Done! (decode errors, if any, recorded in decode_errors.log)")
+    except Exception as e:
+        print("Fatal error in main():", e)
