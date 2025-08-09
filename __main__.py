@@ -211,13 +211,52 @@ def main():
     """)
     # Ensure ench column exists (older DBs created before ench was added)
     info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
-    existing_cols = {row[1] for row in info}
+    existing_cols = [row[1] for row in info]
     if 'ench' not in existing_cols:
         try:
             c2.execute("ALTER TABLE pricesV2 ADD COLUMN ench TEXT")
             print("Migrated: added ench column to pricesV2")
+            info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
+            existing_cols = [row[1] for row in info]
         except Exception as e:
             log_decode_error({'stage': 'migrate_add_ench_column', 'note': 'ALTER TABLE failed'}, e)
+    # Reorder columns so that ench appears immediately after name if not already
+    desired_order = ['id','timestamp','itemkey','base_key','unitprice','count','recomb','color','name','ench','raw_item_bytes','full_nbt_json']
+    if existing_cols != desired_order:
+        # Verify all desired columns exist (ench may just have been added)
+        if all(col in existing_cols for col in desired_order):
+            try:
+                c2.execute("BEGIN TRANSACTION")
+                c2.execute("""
+                    CREATE TABLE IF NOT EXISTS pricesV2_new (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp INTEGER,
+                        itemkey TEXT,
+                        base_key TEXT,
+                        unitprice REAL,
+                        count INTEGER,
+                        recomb INTEGER,
+                        color TEXT,
+                        name TEXT,
+                        ench TEXT,
+                        raw_item_bytes TEXT,
+                        full_nbt_json TEXT
+                    )
+                """)
+                c2.execute("""
+                    INSERT INTO pricesV2_new (id,timestamp,itemkey,base_key,unitprice,count,recomb,color,name,ench,raw_item_bytes,full_nbt_json)
+                    SELECT id,timestamp,itemkey,base_key,unitprice,count,recomb,color,name,ench,raw_item_bytes,full_nbt_json FROM pricesV2
+                """)
+                c2.execute("DROP TABLE pricesV2")
+                c2.execute("ALTER TABLE pricesV2_new RENAME TO pricesV2")
+                c2.execute("COMMIT")
+                print("Migrated: reordered columns placing ench after name")
+            except Exception as e:
+                c2.execute("ROLLBACK")
+                log_decode_error({'stage': 'migrate_reorder_ench'}, e)
+                print("Warning: failed to reorder columns; continuing with existing order")
+            # Refresh info for index creation accuracy
+            info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
     c2.execute("CREATE TABLE IF NOT EXISTS item_enchants (price_id INTEGER, enchant TEXT, level INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_attributes (price_id INTEGER, attribute TEXT, value INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_rarities (price_id INTEGER, rarity TEXT)")
