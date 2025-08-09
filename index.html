@@ -216,6 +216,18 @@
 
                 function formatCell(col, val) {
                     if (val === null || val === undefined) return '';
+                    if (col === 'ench') {
+                        try {
+                            if (typeof val === 'string' && val.trim().startsWith('{')) {
+                                const obj = JSON.parse(val);
+                                if (obj && typeof obj === 'object') {
+                                    const parts = Object.keys(obj).sort().map(k => `${k}=${obj[k]}`);
+                                    return parts.join(', ');
+                                }
+                            }
+                        } catch { /* ignore parse errors */ }
+                        return val; // fallback raw
+                    }
                     if (col === 'timestamp' && document.getElementById('formatTimestamp').checked) {
                         const num = Number(val);
                         if (!isNaN(num) && num > 1000000000) { // seconds or ms heuristic
