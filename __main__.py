@@ -200,9 +200,18 @@ def main():
             color TEXT,
             name TEXT,
             raw_item_bytes TEXT,
-            full_nbt_json TEXT
+            full_nbt_json TEXT,
+            ench TEXT -- JSON string of full enchantments dict (nullable)
         )
     """)
+    # Migration: add ench column if upgrading an existing DB without it
+    try:
+        info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
+        existing_cols = {row[1] for row in info}
+        if 'ench' not in existing_cols:
+            c2.execute("ALTER TABLE pricesV2 ADD COLUMN ench TEXT")
+    except Exception as e:
+        log_decode_error({'stage': 'migrate_add_ench_column'}, e)
     c2.execute("CREATE TABLE IF NOT EXISTS item_enchants (price_id INTEGER, enchant TEXT, level INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_attributes (price_id INTEGER, attribute TEXT, value INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_rarities (price_id INTEGER, rarity TEXT)")
@@ -212,9 +221,10 @@ def main():
     c2.execute("CREATE INDEX IF NOT EXISTS idx_pricesV2_timestamp ON pricesV2(timestamp)")
     for a in auctions:
         full_nbt_json = json.dumps(a.get('full_nbt'), ensure_ascii=False)
+        ench_json = json.dumps(a.get('ench2'), ensure_ascii=False) if a.get('ench2') else None
         c2.execute(
-            "INSERT INTO pricesV2 (timestamp, itemkey, base_key, unitprice, count, recomb, color, name, raw_item_bytes, full_nbt_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (a['timestamp'], a.get('key'), a.get('base_key'), a.get('unitprice'), a.get('count'), 1 if a.get('recomb') else 0, a.get('color'), a.get('name'), a.get('item_bytes'), full_nbt_json)
+            "INSERT INTO pricesV2 (timestamp, itemkey, base_key, unitprice, count, recomb, color, name, raw_item_bytes, full_nbt_json, ench) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (a['timestamp'], a.get('key'), a.get('base_key'), a.get('unitprice'), a.get('count'), 1 if a.get('recomb') else 0, a.get('color'), a.get('name'), a.get('item_bytes'), full_nbt_json, ench_json)
         )
         price_id = c2.lastrowid
         if a.get('ench2'):
