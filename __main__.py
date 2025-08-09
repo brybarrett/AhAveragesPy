@@ -56,6 +56,11 @@ def main():
     with open('options.json') as f:
         options = json.load(f)
 
+    def json_default(o):
+        if isinstance(o, (bytes, bytearray)):
+            return base64.b64encode(o).decode('ascii')
+        return str(o)
+
     # 2. Fetch auctions
     print("Getting auctions...")
     async def fetch_auctions():
@@ -92,7 +97,7 @@ def main():
     auctions = decoded
     try:
         with open('auctions.json', 'w') as f:
-            json.dump(auctions, f, indent=4)
+            json.dump(auctions, f, indent=4, default=json_default)
     except Exception as e:
         print("Error: Failed to write auctions.json: ", e)
 
@@ -169,12 +174,12 @@ def main():
     # 7. Dump processed JSON snapshots
     try:
         with open('auctions2.json', 'w') as f:
-            json.dump(auctions, f, indent=4)
+            json.dump(auctions, f, indent=4, default=json_default)
     except Exception as e:
         print("Error: Failed to write auctions2.json", e)
     auctions3 = [{k: x[k] for k in ('timestamp','key','unitprice')} for x in auctions]
     with open('auctions3.json', 'w') as f:
-        json.dump(auctions3, f, indent=4)
+        json.dump(auctions3, f, indent=4, default=json_default)
 
     # 8. Insert legacy DB
     sql = "INSERT INTO prices (timestamp, itemkey, price) VALUES (?, ?, ?)"
@@ -204,14 +209,15 @@ def main():
             ench TEXT -- JSON string of full enchantments dict (nullable)
         )
     """)
-    # Migration: add ench column if upgrading an existing DB without it
-    try:
-        info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
-        existing_cols = {row[1] for row in info}
-        if 'ench' not in existing_cols:
+    # Ensure ench column exists (older DBs created before ench was added)
+    info = c2.execute("PRAGMA table_info(pricesV2)").fetchall()
+    existing_cols = {row[1] for row in info}
+    if 'ench' not in existing_cols:
+        try:
             c2.execute("ALTER TABLE pricesV2 ADD COLUMN ench TEXT")
-    except Exception as e:
-        log_decode_error({'stage': 'migrate_add_ench_column'}, e)
+            print("Migrated: added ench column to pricesV2")
+        except Exception as e:
+            log_decode_error({'stage': 'migrate_add_ench_column', 'note': 'ALTER TABLE failed'}, e)
     c2.execute("CREATE TABLE IF NOT EXISTS item_enchants (price_id INTEGER, enchant TEXT, level INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_attributes (price_id INTEGER, attribute TEXT, value INTEGER)")
     c2.execute("CREATE TABLE IF NOT EXISTS item_rarities (price_id INTEGER, rarity TEXT)")
