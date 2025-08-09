@@ -7,7 +7,10 @@
             body {
                 font-family: Arial, sans-serif;
                 margin: 20px;
+                background: #ffffff;
+                color: #222;
             }
+            body.dark { background:#1e1f22; color:#ddd; }
             table {
                 border-collapse: collapse;
                 width: 100%;
@@ -18,12 +21,27 @@
                 padding: 8px;
                 text-align: left;
             }
-            th {
-                background-color: #f2f2f2;
-            }
+            th { background-color: #f2f2f2; position:sticky; top:0; z-index:2; cursor:pointer; }
+            body.dark th { background:#333; }
             #controls {
                 margin-bottom: 20px;
             }
+            #extraControls { margin:10px 0 20px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+            #columnToggles { max-height:140px; overflow:auto; border:1px solid #aaa; padding:6px; background:#fafafa; }
+            body.dark #columnToggles { background:#2a2d31; border-color:#555; }
+            .badge { display:inline-block; padding:2px 6px; border-radius:4px; background:#eee; margin-right:4px; font-size:12px; }
+            body.dark .badge { background:#444; }
+            mark { background: #ffe58a; padding:0 2px; }
+            body.dark mark { background:#665500; }
+            .sortable-indicator { font-size:10px; margin-left:4px; opacity:0.6; }
+            .btn { padding:4px 10px; cursor:pointer; border:1px solid #888; background:#f5f5f5; border-radius:4px; }
+            .btn:hover { background:#eaeaea; }
+            body.dark .btn { background:#333; border-color:#666; color:#ddd; }
+            body.dark .btn:hover { background:#3d3d3d; }
+            #stats { font-size:14px; margin-top:10px; white-space:pre; font-family:monospace; overflow:auto; max-height:200px; }
+            #statusLine { margin-top:6px; font-size:12px; opacity:.8; }
+            .flex-sep { flex:1 1 auto; }
+            a.download-link { text-decoration:none; }
         </style>
     </head>
     <body>
@@ -38,7 +56,29 @@
             <label for="searchInput" style="margin-left: 20px;">Search:</label>
             <input type="text" id="searchInput" placeholder="Type to search..." />
         </div>
+        <div id="extraControls">
+            <div>
+                <label style="font-weight:bold;">Columns:</label>
+                <div id="columnToggles"></div>
+            </div>
+            <div>
+                <button id="computeStats" class="btn">Compute Stats</button>
+                <button id="exportCsv" class="btn">Export CSV</button>
+                <button id="toggleDark" class="btn">Dark Mode</button>
+            </div>
+            <div>
+                <label>Jump to page:</label>
+                <input type="number" id="jumpPage" style="width:70px;" min="1" />
+                <button id="jumpBtn" class="btn">Go</button>
+            </div>
+            <div>
+                <label><input type="checkbox" id="formatTimestamp" checked /> Format timestamps</label>
+            </div>
+            <span class="flex-sep"></span>
+            <div id="statusLine"></div>
+        </div>
         <div id="tableContainer"></div>
+        <div id="stats"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
         <script>
             (async function() {
@@ -118,53 +158,143 @@
                 });
 
                 let currentTableName = tableNames[0];
+                let sortColumn = null;
+                let sortDir = 'ASC';
+                const hiddenColumns = new Set();
+                let lastSearchQuery = '';
 
-                // Function to display table contents with optional search filtering and pagination.
-                function displayTable(tableName, searchQuery = "") {
-                    let offset = (currentPage - 1) * recordsPerPage;
-                    let query = `SELECT * FROM "${tableName}" LIMIT ${recordsPerPage} OFFSET ${offset};`;
-                    let result = db.exec(query);
+                // Cache of table columns to avoid repeated PRAGMA calls
+                const tableColumnsCache = {};
 
-                    let container = document.getElementById('tableContainer');
+                function getTableColumns(tableName) {
+                    if (tableColumnsCache[tableName]) return tableColumnsCache[tableName];
+                    const pragma = db.exec(`PRAGMA table_info("${tableName}");`);
+                    if (!pragma[0]) return [];
+                    const cols = pragma[0].values.map(row => row[1]); // second field is name
+                    tableColumnsCache[tableName] = cols;
+                    return cols;
+                }
+
+                // Function to display table contents with optional global search filtering and pagination.
+                function generateColumnToggles(columns) {
+                    const box = document.getElementById('columnToggles');
+                    box.innerHTML = '';
+                    columns.forEach(c => {
+                        const id = 'colToggle_' + c;
+                        const label = document.createElement('label');
+                        label.style.display = 'inline-block';
+                        label.style.marginRight = '8px';
+                        label.innerHTML = `<input type="checkbox" id="${id}" data-col="${c}" ${hiddenColumns.has(c)?'':'checked'} /> ${c}`;
+                        box.appendChild(label);
+                    });
+                    box.querySelectorAll('input[type=checkbox]').forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            const col = cb.getAttribute('data-col');
+                            if (cb.checked) hiddenColumns.delete(col); else hiddenColumns.add(col);
+                            displayTable(currentTableName, document.getElementById('searchInput').value, false);
+                        });
+                    });
+                }
+
+                function formatCell(col, val) {
+                    if (val === null || val === undefined) return '';
+                    if (col === 'timestamp' && document.getElementById('formatTimestamp').checked) {
+                        const num = Number(val);
+                        if (!isNaN(num) && num > 1000000000) { // seconds or ms heuristic
+                            let ms = num < 2e12 ? num : Math.floor(num/1000); // if > year 2033 treat as ms
+                            const d = new Date(ms);
+                            return d.toISOString().replace('T',' ').split('.')[0];
+                        }
+                    }
+                    return val;
+                }
+
+                function highlight(text, query) {
+                    if (!query) return text;
+                    try {
+                        const esc = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        const re = new RegExp('(' + esc + ')', 'ig');
+                        return text.toString().replace(re, '<mark>$1</mark>');
+                    } catch { return text; }
+                }
+
+                function displayTable(tableName, searchQuery = "", refreshToggles = true) {
+                    const container = document.getElementById('tableContainer');
                     container.innerHTML = "";
-
-                    if (!result[0]) {
+                    const escaped = searchQuery.replace(/'/g, "''").toLowerCase();
+                    const hasSearch = escaped.trim() !== "";
+                    let whereClause = "";
+                    let columns = getTableColumns(tableName);
+                    if (columns.length === 0) {
                         container.innerHTML = `<p>No data available in table "${tableName}"</p>`;
                         return;
                     }
 
-                    let { columns, values } = result[0];
-                    let filteredRows = values;
+                    if (refreshToggles) generateColumnToggles(columns);
 
-                    if (searchQuery.trim() !== "") {
-                        const lowerQuery = searchQuery.toLowerCase();
-                        filteredRows = values.filter(row => 
-                            row.some(cell => cell && cell.toString().toLowerCase().includes(lowerQuery))
-                        );
+                    if (hasSearch) {
+                        // Build OR clause across all columns, casting to text & lower-casing
+                        const likeExprs = columns.map(c => `LOWER(CAST("${c}" AS TEXT)) LIKE '%${escaped}%'`);
+                        whereClause = 'WHERE ' + likeExprs.join(' OR ');
                     }
 
-                    if (filteredRows.length === 0) {
+                    // Counts
+                    const totalRecords = db.exec(`SELECT COUNT(*) FROM "${tableName}";`)[0].values[0][0];
+                    const filteredRecords = hasSearch ? db.exec(`SELECT COUNT(*) FROM "${tableName}" ${whereClause};`)[0].values[0][0] : totalRecords;
+
+                    // Pagination based on filtered set
+                    let totalPages = Math.max(1, Math.ceil(filteredRecords / recordsPerPage));
+                    if (currentPage > totalPages) currentPage = totalPages; // adjust if necessary
+                    const offset = (currentPage - 1) * recordsPerPage;
+                    const orderClause = sortColumn ? `ORDER BY "${sortColumn}" ${sortDir}` : '';
+                    const query = `SELECT * FROM "${tableName}" ${whereClause} ${orderClause} LIMIT ${recordsPerPage} OFFSET ${offset};`;
+                    const result = db.exec(query);
+
+                    if (!result[0] || result[0].values.length === 0) {
                         container.innerHTML = `<p>No matching records found in table "${tableName}"</p>`;
+                        const entriesCountElement = document.getElementById('entriesCount');
+                        entriesCountElement.textContent = hasSearch
+                            ? `Entries in current table: 0 / ${totalRecords.toLocaleString()} (filtered)`
+                            : `Entries in current table: ${totalRecords.toLocaleString()}`;
                         return;
                     }
 
-                    let table = document.createElement('table');
-                    let thead = document.createElement('thead');
-                    let headerRow = document.createElement('tr');
+                    const { values } = result[0];
+
+                    // Build table
+                    const table = document.createElement('table');
+                    const thead = document.createElement('thead');
+                    const headerRow = document.createElement('tr');
                     columns.forEach(col => {
-                        let th = document.createElement('th');
-                        th.textContent = col;
+                        if (hiddenColumns.has(col)) return;
+                        const th = document.createElement('th');
+                        th.innerHTML = col + (sortColumn === col ? ` <span class="sortable-indicator">${sortDir === 'ASC' ? '▲' : '▼'}</span>` : '');
+                        th.addEventListener('click', () => {
+                            if (sortColumn === col) { sortDir = (sortDir === 'ASC') ? 'DESC' : 'ASC'; }
+                            else { sortColumn = col; sortDir = 'ASC'; }
+                            displayTable(tableName, document.getElementById('searchInput').value, false);
+                        });
                         headerRow.appendChild(th);
                     });
                     thead.appendChild(headerRow);
                     table.appendChild(thead);
 
-                    let tbody = document.createElement('tbody');
-                    filteredRows.forEach(row => {
-                        let tr = document.createElement('tr');
-                        row.forEach(cell => {
-                            let td = document.createElement('td');
-                            td.textContent = cell;
+                    const tbody = document.createElement('tbody');
+                    values.forEach(row => {
+                        const tr = document.createElement('tr');
+                        row.forEach((cell, idx) => {
+                            const col = columns[idx];
+                            if (hiddenColumns.has(col)) return;
+                            const td = document.createElement('td');
+                            const formatted = formatCell(col, cell);
+                            td.innerHTML = hasSearch ? highlight(formatted, searchQuery) : formatted;
+                            td.title = `${col}`;
+                            td.addEventListener('dblclick', () => {
+                                navigator.clipboard.writeText(cell === null ? '' : cell.toString());
+                                const status = document.getElementById('statusLine');
+                                status.textContent = `Copied ${col} value to clipboard.`;
+                                setTimeout(()=>{ if (status.textContent.startsWith('Copied')) status.textContent=''; }, 2000);
+                            });
                             tr.appendChild(td);
                         });
                         tbody.appendChild(tr);
@@ -172,19 +302,20 @@
                     table.appendChild(tbody);
                     container.appendChild(table);
 
-                    // Add pagination controls
-                    let totalRecords = db.exec(`SELECT COUNT(*) as count FROM "${tableName}";`)[0].values[0][0];
-                    let totalPages = Math.ceil(totalRecords / recordsPerPage);
-
                     // Update entries count
-                    let entriesCountElement = document.getElementById('entriesCount');
-                    entriesCountElement.textContent = `Entries in current table: ${totalRecords.toLocaleString()}`;
+                    const entriesCountElement = document.getElementById('entriesCount');
+                    if (hasSearch) {
+                        entriesCountElement.textContent = `Entries in current table: ${filteredRecords.toLocaleString()} / ${totalRecords.toLocaleString()} (filtered)`;
+                    } else {
+                        entriesCountElement.textContent = `Entries in current table: ${totalRecords.toLocaleString()}`;
+                    }
 
-                    let paginationControls = document.createElement('div');
+                    // Pagination controls
+                    const paginationControls = document.createElement('div');
                     paginationControls.style.marginTop = '10px';
 
                     if (currentPage > 1) {
-                        let prevButton = document.createElement('button');
+                        const prevButton = document.createElement('button');
                         prevButton.textContent = 'Previous';
                         prevButton.addEventListener('click', () => {
                             currentPage--;
@@ -192,9 +323,8 @@
                         });
                         paginationControls.appendChild(prevButton);
                     }
-
                     if (currentPage < totalPages) {
-                        let nextButton = document.createElement('button');
+                        const nextButton = document.createElement('button');
                         nextButton.textContent = 'Next';
                         nextButton.style.marginLeft = '10px';
                         nextButton.addEventListener('click', () => {
@@ -203,8 +333,14 @@
                         });
                         paginationControls.appendChild(nextButton);
                     }
+                    // Page indicator
+                    const pageInfo = document.createElement('span');
+                    pageInfo.style.marginLeft = '15px';
+                    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+                    paginationControls.appendChild(pageInfo);
 
                     container.appendChild(paginationControls);
+                    lastSearchQuery = searchQuery;
                 }
 
                 // Display the first table by default.
@@ -214,13 +350,111 @@
                 tableSelect.addEventListener('change', function() {
                     currentTableName = this.value;
                     document.getElementById('searchInput').value = "";
+                    sortColumn = null; sortDir = 'ASC'; hiddenColumns.clear();
                     displayTable(currentTableName);
                 });
 
                 // Live search as the user types.
                 const searchInput = document.getElementById('searchInput');
                 searchInput.addEventListener('input', function() {
+                    currentPage = 1; // reset to first page when starting a new search
                     displayTable(currentTableName, this.value);
+                });
+
+                // Jump to page
+                document.getElementById('jumpBtn').addEventListener('click', () => {
+                    const val = parseInt(document.getElementById('jumpPage').value);
+                    if (!isNaN(val) && val > 0) { currentPage = val; displayTable(currentTableName, document.getElementById('searchInput').value, false); }
+                });
+
+                // Timestamp formatting toggle
+                document.getElementById('formatTimestamp').addEventListener('change', () => {
+                    displayTable(currentTableName, document.getElementById('searchInput').value, false);
+                });
+
+                // Dark mode
+                document.getElementById('toggleDark').addEventListener('click', () => {
+                    document.body.classList.toggle('dark');
+                });
+
+                // Stats computation
+                document.getElementById('computeStats').addEventListener('click', () => {
+                    const searchQuery = document.getElementById('searchInput').value;
+                    const escaped = searchQuery.replace(/'/g, "''").toLowerCase();
+                    let whereClause = '';
+                    const columns = getTableColumns(currentTableName);
+                    if (escaped.trim() !== '') {
+                        const likeExprs = columns.map(c => `LOWER(CAST("${c}" AS TEXT)) LIKE '%${escaped}%'`);
+                        whereClause = 'WHERE ' + likeExprs.join(' OR ');
+                    }
+                    const statsBox = document.getElementById('stats');
+                    statsBox.textContent = 'Computing stats...';
+                    // Determine numeric columns by sampling first 100 rows
+                    const sample = db.exec(`SELECT * FROM "${currentTableName}" ${whereClause} LIMIT 100;`);
+                    const numericCols = [];
+                    if (sample[0]) {
+                        const cols = columns;
+                        for (let ci=0; ci<cols.length; ci++) {
+                            let allNum = true;
+                            for (const row of sample[0].values) {
+                                const v = row[ci];
+                                if (v === null || v === '') continue;
+                                if (isNaN(Number(v))) { allNum = false; break; }
+                            }
+                            if (allNum) numericCols.push(cols[ci]);
+                        }
+                    }
+                    // Build stats queries
+                    let lines = [];
+                    lines.push(`Table: ${currentTableName}`);
+                    const total = db.exec(`SELECT COUNT(*) FROM "${currentTableName}";`)[0].values[0][0];
+                    const filtered = whereClause ? db.exec(`SELECT COUNT(*) FROM "${currentTableName}" ${whereClause};`)[0].values[0][0] : total;
+                    lines.push(`Row count: ${filtered}${whereClause? ' / '+total+' (filtered)' : ''}`);
+                    numericCols.forEach(col => {
+                        const q = db.exec(`SELECT MIN(CAST("${col}" AS REAL)), MAX(CAST("${col}" AS REAL)), AVG(CAST("${col}" AS REAL)) FROM "${currentTableName}" ${whereClause};`);
+                        if (q[0]) {
+                            const [minv, maxv, avgv] = q[0].values[0];
+                            lines.push(`${col.padEnd(15)} min=${minv} max=${maxv} avg=${avgv}`);
+                        }
+                    });
+                    // Distinct counts for first up to 5 columns (to limit cost)
+                    columns.slice(0,5).forEach(col => {
+                        const q = db.exec(`SELECT COUNT(DISTINCT "${col}") FROM "${currentTableName}" ${whereClause};`);
+                        if (q[0]) lines.push(`distinct(${col})=${q[0].values[0][0]}`);
+                    });
+                    statsBox.textContent = lines.join('\n');
+                });
+
+                // CSV export
+                document.getElementById('exportCsv').addEventListener('click', () => {
+                    const searchQuery = document.getElementById('searchInput').value;
+                    const escaped = searchQuery.replace(/'/g, "''").toLowerCase();
+                    let whereClause = '';
+                    const columns = getTableColumns(currentTableName);
+                    if (escaped.trim() !== '') {
+                        const likeExprs = columns.map(c => `LOWER(CAST("${c}" AS TEXT)) LIKE '%${escaped}%'`);
+                        whereClause = 'WHERE ' + likeExprs.join(' OR ');
+                    }
+                    const orderClause = sortColumn ? `ORDER BY "${sortColumn}" ${sortDir}` : '';
+                    const all = db.exec(`SELECT * FROM "${currentTableName}" ${whereClause} ${orderClause};`);
+                    if (!all[0]) { alert('No data to export'); return; }
+                    const rows = [columns.filter(c=>!hiddenColumns.has(c))];
+                    all[0].values.forEach(row => {
+                        rows.push(row.filter((_,i)=>!hiddenColumns.has(columns[i])));
+                    });
+                    const csv = rows.map(r => r.map(v => {
+                        if (v === null || v === undefined) return '';
+                        const s = v.toString().replace(/"/g,'""');
+                        return '"' + s + '"';
+                    }).join(',')).join('\n');
+                    const blob = new Blob([csv], {type:'text/csv'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${currentTableName}_export.csv`;
+                    a.className='download-link';
+                    a.click();
+                    URL.revokeObjectURL(url);
                 });
             })();
         </script>
