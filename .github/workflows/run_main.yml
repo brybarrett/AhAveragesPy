@@ -27,12 +27,16 @@ jobs:
       run: |
         python __main__.py
 
-    - name: Commit and push changes
+    - name: Commit and push database changes
       env:
         PAT: ${{ secrets.PAT }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add database.db
-        git commit -m 'Update database.db with new auctions'
-        git push https://PAT:${{ secrets.PAT }}@github.com/UltimateBoi/AhAveragesPy.git HEAD:main
+        git add database.db database2.db index.html
+        if git diff --cached --quiet; then
+          echo "No database changes to commit."
+        else
+          git commit -m 'Update databases (legacy + v2) with new auctions'
+          git push https://PAT:${{ secrets.PAT }}@github.com/UltimateBoi/AhAveragesPy.git HEAD:main
+        fi

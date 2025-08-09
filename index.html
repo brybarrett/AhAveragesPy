@@ -48,6 +48,11 @@
         <h1>Database Viewer</h1>
         <p id="entriesCount">Entries in current table: 0</p>
         <div id="controls">
+            <label for="databaseSelect">Select Database:</label>
+            <select id="databaseSelect">
+                <option value="database.db" selected>database.db (legacy)</option>
+                <option value="database2.db">database2.db (v2)</option>
+            </select>
             <label for="tableSelect">Select Table:</label>
             <select id="tableSelect">
                 <option disabled selected>Loading tables...</option>
@@ -90,17 +95,50 @@
                 // Initialize SQL.js.
                 const SQL = await initSqlJs(config);
 
-                // Fetch the database file as an ArrayBuffer.
-                let response = await fetch('database.db');
-                if (!response.ok) {
-                    document.body.innerHTML = '<h2>Error loading database.db</h2>';
-                    return;
-                }
-                let buffer = await response.arrayBuffer();
-                let db = new SQL.Database(new Uint8Array(buffer));
+                // Globals that change when a database is loaded
+                let db = null;
+                let tableNames = [];
+                let currentTableName = null;
+                let sortColumn = null;
+                let sortDir = 'ASC';
+                const hiddenColumns = new Set();
+                let lastSearchQuery = '';
+                const tableColumnsCache = {}; // cache per DB load
 
-                // Get the table names from the database.
-                let res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+                async function loadDatabase(dbFile) {
+                    document.getElementById('statusLine').textContent = `Loading ${dbFile} ...`;
+                    // reset caches/state
+                    Object.keys(tableColumnsCache).forEach(k=>delete tableColumnsCache[k]);
+                    sortColumn = null; sortDir='ASC'; hiddenColumns.clear(); lastSearchQuery='';
+                    try {
+                        const response = await fetch(dbFile + '?_ts=' + Date.now()); // cache-buster
+                        if (!response.ok) throw new Error(`Failed to fetch ${dbFile}`);
+                        const buffer = await response.arrayBuffer();
+                        db = new SQL.Database(new Uint8Array(buffer));
+                    } catch (e) {
+                        document.getElementById('tableContainer').innerHTML = `<p style='color:red;'>Error loading ${dbFile}: ${e.message}</p>`;
+                        document.getElementById('statusLine').textContent = '';
+                        return;
+                    }
+                    const res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+                    tableNames = (res[0] && res[0].values.map(r=>r[0])) || [];
+                    const tableSelect = document.getElementById('tableSelect');
+                    tableSelect.innerHTML = '';
+                    if (tableNames.length === 0) {
+                        tableSelect.innerHTML = '<option disabled>No tables found</option>';
+                        document.getElementById('tableContainer').innerHTML = `<p>No tables in ${dbFile}</p>`;
+                        document.getElementById('entriesCount').textContent = 'Entries in current table: 0';
+                        document.getElementById('statusLine').textContent = '';
+                        return;
+                    }
+                    tableNames.forEach(name => {
+                        const opt = document.createElement('option');
+                        opt.value = name; opt.textContent = name; tableSelect.appendChild(opt);
+                    });
+                    currentTableName = tableNames[0];
+                    displayTable(currentTableName);
+                    document.getElementById('statusLine').textContent = `Loaded ${dbFile} (${tableNames.length} tables)`;
+                }
 
                 // Initialize records-per-page controls and pagination variables
                 let recordsPerPage = 25;
@@ -143,28 +181,8 @@
                         displayTable(currentTableName, document.getElementById('searchInput').value);
                     }
                 });
-                let tableNames = (res[0] && res[0].values.map(row => row[0])) || [];
                 const tableSelect = document.getElementById('tableSelect');
-                tableSelect.innerHTML = "";
-                if (tableNames.length === 0) {
-                    tableSelect.innerHTML = '<option disabled>No tables found</option>';
-                    return;
-                }
-                tableNames.forEach(name => {
-                    let option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    tableSelect.appendChild(option);
-                });
-
-                let currentTableName = tableNames[0];
-                let sortColumn = null;
-                let sortDir = 'ASC';
-                const hiddenColumns = new Set();
-                let lastSearchQuery = '';
-
-                // Cache of table columns to avoid repeated PRAGMA calls
-                const tableColumnsCache = {};
+                const databaseSelect = document.getElementById('databaseSelect');
 
                 function getTableColumns(tableName) {
                     if (tableColumnsCache[tableName]) return tableColumnsCache[tableName];
@@ -343,8 +361,14 @@
                     lastSearchQuery = searchQuery;
                 }
 
-                // Display the first table by default.
-                displayTable(currentTableName);
+                // Initial load of the default selected database
+                await loadDatabase(databaseSelect.value);
+
+                // Switch database
+                databaseSelect.addEventListener('change', async function() {
+                    currentPage = 1;
+                    await loadDatabase(this.value);
+                });
 
                 // When table is changed, clear search and display new table.
                 tableSelect.addEventListener('change', function() {
