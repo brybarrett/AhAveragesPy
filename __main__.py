@@ -22,9 +22,9 @@ def log_decode_error(context, exc):
         'auction_context': context,
         'traceback': ''.join(traceback.format_exception(exc)).strip()
     }
-    # Trim very large base64 data in log to avoid ballooning file size
-    b64 = context.get('item_bytes')
+    b64 = context.get('item_bytes') if isinstance(context, dict) else None
     if b64 and isinstance(b64, str) and len(b64) > 120:
+        # truncate large base64 to keep log concise
         record['auction_context']['item_bytes'] = b64[:120] + '...'
     try:
         with open(DECODE_ERROR_LOG, 'a') as f:
@@ -33,36 +33,84 @@ def log_decode_error(context, exc):
         print(f"Logging failure (ignored): {log_exc}")
 
 def decode_item_bytes(b, context=None):
-    """Decode base64 NBT item bytes into a Python structure.
-
-    Returns None on failure and logs detailed info for later debugging.
-    """
+    """Decode base64 NBT item bytes into a Python structure; returns None if fails."""
     try:
         raw = base64.b64decode(b)
         nbt_file = nbt.nbt.NBTFile(fileobj=io.BytesIO(raw))
-        def unpack_nbt(tag):
+        def unpack(tag):
             if isinstance(tag, TAG_List):
-                return [unpack_nbt(i) for i in tag.tags]
-            elif isinstance(tag, TAG_Compound):
-                return {i.name: unpack_nbt(i) for i in tag.tags}
-            else:
-                return tag.value
-        unpacked_nbt = unpack_nbt(nbt_file)
-        # Convert bytearray to string for top-level keys
-        for key, value in list(unpacked_nbt.items()):
-            if isinstance(value, (bytearray, bytes)):
-                try:
-                    unpacked_nbt[key] = value.decode('utf-8', errors='replace')
-                except Exception:
-                    pass
-        return unpacked_nbt
+                return [unpack(t) for t in tag.tags]
+            if isinstance(tag, TAG_Compound):
+                return {t.name: unpack(t) for t in tag.tags}
+            return tag.value
+        return unpack(nbt_file)
     except Exception as e:
-        ctx = context.copy() if isinstance(context, dict) else {}
-        ctx['item_bytes'] = b
+        ctx = context.copy() if isinstance(context, dict) else {'note': 'no context'}
+        ctx['item_bytes'] = b[:120] + '...' if isinstance(b, str) and len(b) > 120 else b
         log_decode_error(ctx, e)
         return None
 
 def main():
+    # Build processed auctions with extracted fields, keeping raw bytes & full NBT
+    processed = []
+    for x in auctions:
+        try:
+            detail = x['detail']
+            ea = detail['tag']['ExtraAttributes']
+            display = detail['tag'].get('display', {})
+            record = {
+                'timestamp': x['timestamp'],
+                'price': x['price'],
+                'unitprice': x['price'] / detail['Count'] if detail.get('Count') else None,
+                'count': detail.get('Count'),
+                'ench1': detail['tag'].get('ench'),
+                'ench2': ea.get('enchantments'),
+                'recomb': ea.get('rarity_upgrades'),
+                'color': str(display.get('color')) if display.get('color') is not None else None,
+                'attributes': ea.get('attributes'),
+                'gems': ({k: v['quality'] for k, v in ea.get('gems', {}).items() if k != 'unlocked_slots' and isinstance(v, dict)}
+                         if ea.get('gems') and any(k != 'unlocked_slots' and isinstance(v, dict) and 'quality' in v for k, v in ea.get('gems', {}).items()) else None),
+                'lore': [l.replace('§.', '') for l in display.get('Lore', [])],
+                'name': display.get('Name'),
+                'id': ea.get('id'),
+                'item_bytes': x.get('item_bytes'),
+                'full_nbt': detail
+            }
+            processed.append(record)
+        except Exception as e:
+            log_decode_error({'stage': 'build_processed_record'}, e)
+    auctions = processed
+
+    # Construct concatenated key (legacy composite key) and also keep base id as base_key
+    for x in auctions:
+        parts = []
+        # enchants
+        if x.get('ench2'):
+            ench_part = ','.join([
+                f"{e}={x['ench2'][e]}" for e in options.get('relevant_enchants', {})
+                if e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
+            ])
+            if ench_part:
+                parts.append(ench_part)
+        # rarities in lore
+        lore_rarities = [r for r in options.get('rarities', []) if r in x.get('lore', [])]
+        if lore_rarities:
+            parts.append(','.join(lore_rarities))
+        # reforges in name
+        reforges_present = [r for r in options.get('reforges', []) if r and x.get('name') and r in x['name']]
+        if reforges_present:
+            parts.append(','.join(reforges_present))
+        if x.get('recomb'):
+            parts.append('rarity_upgrade')
+        if x.get('color') is not None:
+            parts.append(f"color={x['color']}")
+        if x.get('attributes'):
+            attr_part = ','.join([f"{a}={x['attributes'][a]}" for a in x['attributes']])
+            if attr_part:
+                parts.append(attr_part)
+        composite_key = x.get('id', 'UNKNOWN') + '.' + '+'.join(parts)
+        x['key'] = composite_key
+        x['base_key'] = x.get('id')
     print("Starting...")
     with open('options.json') as f:
         options = json.load(f)
@@ -119,43 +167,62 @@ def main():
         print(f"Warning: {missing_detail} decoded item(s) lacked expected structure (logged).")
     auctions = filtered
 
-    auctions = [{
-        'timestamp': x['timestamp'],
-        'unitprice': x['price'] / x['detail']['Count'],
-        'count': x['detail']['Count'],
-        'ench1': x['detail']['tag'].get('ench'),
-        'ench2': x['detail']['tag']['ExtraAttributes'].get('enchantments'),
-        'recomb': x['detail']['tag']['ExtraAttributes'].get('rarity_upgrades'),
-        'color': str(x['detail']['tag']['display'].get('color')) if x['detail']['tag']['display'].get('color') is not None else None,
-        'attributes': x['detail']['tag']['ExtraAttributes'].get('attributes'),
-        'gems': ({k: v['quality'] for k, v in x['detail']['tag']['ExtraAttributes'].get('gems', {}).items() if k != 'unlocked_slots' and isinstance(v, dict)}
-                 if x['detail']['tag']['ExtraAttributes'].get('gems') and any(k != 'unlocked_slots' and isinstance(v, dict) and 'quality' in v for k, v in x['detail']['tag']['ExtraAttributes']['gems'].items()) else None),
-        'lore': [l.replace('§.', '') for l in x['detail']['tag']['display'].get('Lore', [])],
-        'name': x['detail']['tag']['display'].get('Name'),
-        'id': x['detail']['tag']['ExtraAttributes'].get('id')
-    } for x in auctions]
+    # Build processed auctions with extracted fields, keep raw bytes & full nbt
+    processed = []
+    for x in auctions:
+        try:
+            detail = x['detail']
+            ea = detail['tag']['ExtraAttributes']
+            display = detail['tag'].get('display', {})
+            rec = {
+                'timestamp': x['timestamp'],
+                'price': x['price'],
+                'unitprice': x['price'] / detail['Count'] if detail.get('Count') else None,
+                'count': detail.get('Count'),
+                'ench1': detail['tag'].get('ench'),
+                'ench2': ea.get('enchantments'),
+                'recomb': ea.get('rarity_upgrades'),
+                'color': str(display.get('color')) if display.get('color') is not None else None,
+                'attributes': ea.get('attributes'),
+                'gems': ({k: v['quality'] for k, v in ea.get('gems', {}).items() if k != 'unlocked_slots' and isinstance(v, dict)}
+                         if ea.get('gems') and any(k != 'unlocked_slots' and isinstance(v, dict) and 'quality' in v for k, v in ea.get('gems', {}).items()) else None),
+                'lore': [l.replace('§.', '') for l in display.get('Lore', [])],
+                'name': display.get('Name'),
+                'id': ea.get('id'),
+                'item_bytes': x.get('item_bytes'),
+                'full_nbt': x.get('full_nbt')  # captured before detail extraction
+            }
+            processed.append(rec)
+        except Exception as e:
+            log_decode_error({'stage': 'process_record'}, e)
+    auctions = processed
 
-    auctions = [{
-        **x,
-        'key': x['id'] + '.' +
-               (','.join([
-                   f"{e}={x['ench2'][e]}" for e in options['relevant_enchants']
-                   if x.get('ench2') and e in x['ench2'] and x['ench2'][e] in options['relevant_enchants'][e]
-               ]) if x.get('ench2') else ''
-               ) +
-               '+' + ','.join([
-                   r for r in options['rarities']
-                   if r in x['lore']
-               ]) +
-               '+' + ','.join([
-                   r for r in options['reforges'] if r in x['name']
-               ]) +
-               ('+rarity_upgrade' if x['recomb'] else '') +
-               (('+color=' + str(x['color'])) if x.get('color') is not None else '') +
-               (('+' + ','.join([
-                   f"{a}={x['attributes'][a]}" for a in x['attributes']
-               ])) if x.get('attributes') else '')
-    } for x in auctions]
+    # Composite key + base key
+    for a in auctions:
+        parts = []
+        if a.get('ench2'):
+            ench_part = ','.join([
+                f"{e}={a['ench2'][e]}" for e in options.get('relevant_enchants', {})
+                if e in a['ench2'] and a['ench2'][e] in options['relevant_enchants'][e]
+            ])
+            if ench_part:
+                parts.append(ench_part)
+        lore_rarities = [r for r in options.get('rarities', []) if r in a.get('lore', [])]
+        if lore_rarities:
+            parts.append(','.join(lore_rarities))
+        reforges_present = [r for r in options.get('reforges', []) if a.get('name') and r in a['name']]
+        if reforges_present:
+            parts.append(','.join(reforges_present))
+        if a.get('recomb'):
+            parts.append('rarity_upgrade')
+        if a.get('color') is not None:
+            parts.append(f"color={a['color']}")
+        if a.get('attributes'):
+            attrs = ','.join([f"{k}={a['attributes'][k]}" for k in a['attributes']])
+            if attrs:
+                parts.append(attrs)
+        a['key'] = a.get('id', 'UNKNOWN') + '.' + '+'.join(parts)
+        a['base_key'] = a.get('id')
 
     # print(auctions)-
     try:
@@ -164,7 +231,7 @@ def main():
     except Exception as e:
         print("Error: Failed to write auctions2.json", e)
 
-    auctions3 = [{k: x[k] for k in 'timestamp,key,unitprice'.split(',')} for x in auctions]
+    auctions3 = [{k: x[k] for k in ('timestamp','key','unitprice')} for x in auctions]
     with open('auctions3.json', 'w') as f:
         json.dump(auctions3, f, indent=4)
 
@@ -177,6 +244,77 @@ def main():
     conn.commit()
     cursor.close()
     conn.close()
+
+    # New detailed database V2
+    conn2 = sqlite3.connect('database2.db')
+    c2 = conn2.cursor()
+    c2.execute("""
+        CREATE TABLE IF NOT EXISTS pricesV2 (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            timestamp INTEGER,
+            itemkey TEXT,
+            base_key TEXT,
+            unitprice REAL,
+            count INTEGER,
+            recomb INTEGER,
+            color TEXT,
+            name TEXT,
+            raw_item_bytes TEXT,
+            full_nbt_json TEXT
+        )
+    """)
+    c2.execute("CREATE TABLE IF NOT EXISTS item_enchants (price_id INTEGER, enchant TEXT, level INTEGER)")
+    c2.execute("CREATE TABLE IF NOT EXISTS item_attributes (price_id INTEGER, attribute TEXT, value INTEGER)")
+    c2.execute("CREATE TABLE IF NOT EXISTS item_rarities (price_id INTEGER, rarity TEXT)")
+    c2.execute("CREATE TABLE IF NOT EXISTS item_reforges (price_id INTEGER, reforge TEXT)")
+    c2.execute("CREATE TABLE IF NOT EXISTS item_gems (price_id INTEGER, gem TEXT, quality INTEGER)")
+    # Useful indexes
+    c2.execute("CREATE INDEX IF NOT EXISTS idx_pricesV2_itemkey ON pricesV2(itemkey)")
+    c2.execute("CREATE INDEX IF NOT EXISTS idx_pricesV2_timestamp ON pricesV2(timestamp)")
+
+    for a in auctions:
+        full_nbt_json = json.dumps(a.get('full_nbt'), ensure_ascii=False)
+        c2.execute(
+            "INSERT INTO pricesV2 (timestamp, itemkey, base_key, unitprice, count, recomb, color, name, raw_item_bytes, full_nbt_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (a['timestamp'], a.get('key'), a.get('base_key'), a.get('unitprice'), a.get('count'), 1 if a.get('recomb') else 0, a.get('color'), a.get('name'), a.get('item_bytes'), full_nbt_json)
+        )
+        price_id = c2.lastrowid
+        if a.get('ench2'):
+            for ench, lvl in a['ench2'].items():
+                try:
+                    c2.execute("INSERT INTO item_enchants (price_id, enchant, level) VALUES (?, ?, ?)", (price_id, ench, lvl))
+                except Exception as e:
+                    log_decode_error({'stage': 'insert_enchant', 'ench': ench, 'lvl': lvl, 'price_id': price_id}, e)
+        if a.get('attributes'):
+            for attr, val in a['attributes'].items():
+                try:
+                    c2.execute("INSERT INTO item_attributes (price_id, attribute, value) VALUES (?, ?, ?)", (price_id, attr, val))
+                except Exception as e:
+                    log_decode_error({'stage': 'insert_attribute', 'attr': attr, 'val': val, 'price_id': price_id}, e)
+        if a.get('gems'):
+            for gem, quality in a['gems'].items():
+                try:
+                    c2.execute("INSERT INTO item_gems (price_id, gem, quality) VALUES (?, ?, ?)", (price_id, gem, quality))
+                except Exception as e:
+                    log_decode_error({'stage': 'insert_gem', 'gem': gem, 'quality': quality, 'price_id': price_id}, e)
+        if a.get('lore'):
+            for r in (options.get('rarities') or []):
+                if r in a['lore']:
+                    try:
+                        c2.execute("INSERT INTO item_rarities (price_id, rarity) VALUES (?, ?)", (price_id, r))
+                    except Exception as e:
+                        log_decode_error({'stage': 'insert_rarity', 'rarity': r, 'price_id': price_id}, e)
+        if a.get('name') and options.get('reforges'):
+            for reforge in options['reforges']:
+                if reforge in a['name']:
+                    try:
+                        c2.execute("INSERT INTO item_reforges (price_id, reforge) VALUES (?, ?)", (price_id, reforge))
+                    except Exception as e:
+                        log_decode_error({'stage': 'insert_reforge', 'reforge': reforge, 'price_id': price_id}, e)
+
+    conn2.commit()
+    c2.close()
+    conn2.close()
 
 def get_prices():
     conn = sqlite3.connect('database.db')
