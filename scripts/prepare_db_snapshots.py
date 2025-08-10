@@ -62,8 +62,14 @@ def optimize_and_dump(db_path: Path):
                 pass
         con.close()
         dump_bytes = subprocess.check_output(["sqlite3", str(db_path), ".dump"], text=False)
-        with gzip.open(dump_path, "wb", compresslevel=9, mtime=0) as gz:
-            gz.write(dump_bytes)
+        # Write gzip (some older Python versions lack mtime parameter); try with mtime then fallback.
+        try:
+            with gzip.GzipFile(filename=str(dump_path), mode="wb", compresslevel=9, mtime=0) as gz:
+                gz.write(dump_bytes)
+        except TypeError:
+            # Fallback without mtime for older interpreters
+            with gzip.GzipFile(filename=str(dump_path), mode="wb", compresslevel=9) as gz:
+                gz.write(dump_bytes)
         orig = db_path.stat().st_size
         comp = dump_path.stat().st_size
         ratio = (1 - comp / orig) * 100 if orig else 0
