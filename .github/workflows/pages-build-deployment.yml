@@ -21,12 +21,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-
+          sudo apt-get update && sudo apt-get install -y sqlite3 gzip
       - name: Build project (prepare static assets)
         run: |
           mkdir -p public
           cp index.html public/
-          # Copy both databases so the viewer can fetch either
+          # Rehydrate .db files from compressed SQL dumps if needed
+          if [ ! -f database.db ] && [ -f database.sql.gz ]; then gzip -dc database.sql.gz | sqlite3 database.db; fi
+          if [ ! -f database2.db ] && [ -f database2.sql.gz ]; then gzip -dc database2.sql.gz | sqlite3 database2.db; fi
           if [ -f database.db ]; then cp database.db public/; fi
           if [ -f database2.db ]; then cp database2.db public/; fi
 

@@ -1,7 +1,13 @@
 combinedAuctions.jsoncombinedAuctions.json
 combinedAuctions.json
 combinedAuctions.json
-# Large data files
+# Large data & binary SQLite files (we snapshot as .sql.gz instead)
 *.json
 !options.json
-database.db
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+!*.sql.gz
+decode_errors.log
+
