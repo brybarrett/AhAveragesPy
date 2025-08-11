@@ -31,6 +31,11 @@ jobs:
           if [ ! -f database2.db ] && [ -f database2.sql.gz ]; then gzip -dc database2.sql.gz | sqlite3 database2.db; fi
           if [ -f database.db ]; then cp database.db public/; fi
           if [ -f database2.db ]; then cp database2.db public/; fi
+          # Also publish the compressed dumps themselves so the UI can fetch .sql.gz directly
+          for f in database.sql.gz database2.sql.gz; do
+            if [ -f "$f" ]; then cp "$f" public/; fi
+          done
+          ls -l public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
