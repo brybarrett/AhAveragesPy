@@ -48,10 +48,11 @@
         <h1>Database Viewer</h1>
         <p id="entriesCount">Entries in current table: 0</p>
         <div id="controls">
-            <label for="databaseSelect">Select Database:</label>
+            <label for="databaseSelect">Select Database Snapshot:</label>
             <select id="databaseSelect">
-                <option value="database.db" selected>database.db (legacy)</option>
-                <option value="database2.db">database2.db (v2)</option>
+                <option value="database.sql.gz" selected>database.sql.gz (legacy dump)</option>
+                <option value="database2.sql.gz">database2.sql.gz (v2 dump)</option>
+                <option value="currentAuctions.db">currentAuctions.db (raw db if present)</option>
             </select>
             <label for="tableSelect">Select Table:</label>
             <select id="tableSelect">
@@ -84,7 +85,8 @@
         </div>
         <div id="tableContainer"></div>
         <div id="stats"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js" integrity="sha512-BUo7Z1xXHDD236UMtYYV9zp1KimG++Hj6kUMlzUxr87hcPLZ9eczsQnUnxE27XGr0C+MEY0S8NxV+4CSkiqhDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             (async function() {
                 // Configure sql.js to get the WASM file from the CDN.
@@ -106,18 +108,53 @@
                 const tableColumnsCache = {}; // cache per DB load
 
                 async function loadDatabase(dbFile) {
-                    document.getElementById('statusLine').textContent = `Loading ${dbFile} ...`;
-                    // reset caches/state
+                    const statusEl = document.getElementById('statusLine');
+                    statusEl.textContent = `Loading ${dbFile} ...`;
                     Object.keys(tableColumnsCache).forEach(k=>delete tableColumnsCache[k]);
                     sortColumn = null; sortDir='ASC'; hiddenColumns.clear(); lastSearchQuery='';
+                    db = null;
                     try {
-                        const response = await fetch(dbFile + '?_ts=' + Date.now()); // cache-buster
-                        if (!response.ok) throw new Error(`Failed to fetch ${dbFile}`);
-                        const buffer = await response.arrayBuffer();
-                        db = new SQL.Database(new Uint8Array(buffer));
+                        if (dbFile.endsWith('.sql.gz')) {
+                            // Fetch compressed SQL dump, gunzip, execute statements to reconstruct DB in-memory.
+                            const res = await fetch(dbFile + '?_ts=' + Date.now());
+                            if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
+                            const compressed = new Uint8Array(await res.arrayBuffer());
+                            let sqlText;
+                            try {
+                                sqlText = new TextDecoder('utf-8').decode(pako.ungzip(compressed));
+                            } catch (decompErr) {
+                                throw new Error('Decompression failed: ' + decompErr.message);
+                            }
+                            db = new SQL.Database();
+                            try {
+                                db.run('BEGIN;');
+                                db.run(sqlText);
+                                db.run('COMMIT;');
+                            } catch (execErr) {
+                                // Attempt fallback: split into statements (simple splitter) if bulk run failed.
+                                try {
+                                    db.run('ROLLBACK;');
+                                } catch {}
+                                const statements = sqlText.split(/;\s*(?:\n|$)/).map(s=>s.trim()).filter(s=>s && !s.startsWith('--'));
+                                db = new SQL.Database();
+                                db.run('BEGIN;');
+                                for (const st of statements) {
+                                    if (/^(BEGIN|COMMIT|ROLLBACK)/i.test(st)) continue;
+                                    try { db.run(st + ';'); } catch (singleErr) { console.warn('Stmt failed', st.slice(0,120)+'...', singleErr); }
+                                }
+                                db.run('COMMIT;');
+                            }
+                        } else if (dbFile.endsWith('.db')) {
+                            const response = await fetch(dbFile + '?_ts=' + Date.now());
+                            if (!response.ok) throw new Error(`Fetch failed (${response.status})`);
+                            const buffer = await response.arrayBuffer();
+                            db = new SQL.Database(new Uint8Array(buffer));
+                        } else {
+                            throw new Error('Unsupported file type');
+                        }
                     } catch (e) {
-                        document.getElementById('tableContainer').innerHTML = `<p style='color:red;'>Error loading ${dbFile}: ${e.message}</p>`;
-                        document.getElementById('statusLine').textContent = '';
+                        document.getElementById('tableContainer').innerHTML = `<p style='color:red;'>Error loading ${dbFile}: ${e.message}. If you intended to use the compressed dumps, keep the .sql.gz files produced by prepare_db_snapshots.py in the repo root.</p>`;
+                        statusEl.textContent = '';
                         return;
                     }
                     const res = db.exec("SELECT name FROM sqlite_master WHERE type='table';");
@@ -128,7 +165,7 @@
                         tableSelect.innerHTML = '<option disabled>No tables found</option>';
                         document.getElementById('tableContainer').innerHTML = `<p>No tables in ${dbFile}</p>`;
                         document.getElementById('entriesCount').textContent = 'Entries in current table: 0';
-                        document.getElementById('statusLine').textContent = '';
+                        statusEl.textContent = '';
                         return;
                     }
                     tableNames.forEach(name => {
@@ -137,7 +174,7 @@
                     });
                     currentTableName = tableNames[0];
                     displayTable(currentTableName);
-                    document.getElementById('statusLine').textContent = `Loaded ${dbFile} (${tableNames.length} tables)`;
+                    statusEl.textContent = `Loaded ${dbFile} (${tableNames.length} tables)`;
                 }
 
                 // Initialize records-per-page controls and pagination variables
